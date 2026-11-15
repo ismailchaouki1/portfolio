@@ -7,7 +7,7 @@ export default function Contact() {
   const [status, setStatus] = useState({
     state: 'idle',
     message: '',
-    error: false
+    error: false,
   });
 
   const handleSubmit = async (e) => {
@@ -34,15 +34,19 @@ export default function Contact() {
     }
 
     try {
-      const result = await contactApi.submit({
+      await contactApi.submit({
         name,
         email,
         message,
-        honeypot: formData.get('honeypot')
+        honeypot: formData.get('honeypot'),
       });
       setStatus({ state: 'success', message: 'Message sent successfully!', error: false });
     } catch (err) {
-      setStatus({ state: 'error', message: 'Failed to send message. Please try again.', error: true });
+      setStatus({
+        state: 'error',
+        message: 'Failed to send message. Please try again.',
+        error: true,
+      });
     }
   };
 
@@ -66,22 +70,50 @@ export default function Contact() {
             <input type="hidden" name="honeypot" className={styles.honeypot} />
             <label htmlFor="name" className={styles.contactLabel}>
               Name
-              <input id="name" type="text" name="name" className={styles.contactInput} required minLength={2} />
+              <input
+                id="name"
+                type="text"
+                name="name"
+                className={styles.contactInput}
+                required
+                minLength={2}
+              />
             </label>
             <label htmlFor="email" className={styles.contactLabel}>
               Email
-              <input id="email" type="email" name="email" className={styles.contactInput} required />
+              <input
+                id="email"
+                type="email"
+                name="email"
+                className={styles.contactInput}
+                required
+              />
             </label>
             <label htmlFor="message" className={styles.contactLabel}>
               Message
-              <textarea id="message" name="message" className={styles.contactTextarea} required minLength={10}>
-              </textarea>
+              <textarea
+                id="message"
+                name="message"
+                className={styles.contactTextarea}
+                required
+                minLength={10}
+              ></textarea>
             </label>
-            <button type="submit" className={styles.contactSubmit} disabled={status.state === 'loading'}>
+            <button
+              type="submit"
+              className={styles.contactSubmit}
+              disabled={status.state === 'loading'}
+            >
               {status.state === 'loading' ? 'Sending...' : 'Send'}
             </button>
             {status.state !== 'idle' && (
-              <p className={status.state === 'success' ? 'text-[--text]' : 'text-[--text-dim] text-sm mt-2'}>{status.message}</p>
+              <p
+                className={
+                  status.state === 'success' ? 'text-[--text]' : 'text-[--text-dim] text-sm mt-2'
+                }
+              >
+                {status.message}
+              </p>
             )}
           </form>
         </div>

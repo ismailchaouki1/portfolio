@@ -69,7 +69,6 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* Mobile menu button -->
         <button
           aria-label="Open menu"
           className={styles.mobileToggle}
@@ -80,33 +79,14 @@ export default function Navbar() {
             <path d="M3 12l2-2l10 10L9 21l2-2L3 12z" />
           </svg>
         </button>
-        {/* /mobile menu button -->
-
-        {/* Theme toggle button -->
-        <button
-          aria-label="Toggle dark mode"
-          className={styles.themeToggle}
-          onClick={() => setThemeLocal(theme === 'dark' ? 'light' : 'dark')}
-        >
-          <svg
-            className="h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            onclick="event.stopPropagation()"
-          >
-            <path
-              d="M17 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm5 14H7l5 5 5-5h5v-2h-5v-3h5V7zm7.5-7c.83 0 1.5.68 1.5 1.5S14.83 8.5 14 8.5S12.5 7.82 12.5 7c0-.83.67-1.5 1.5-1.5zM12 5.5l5 4.98L12 15l-5-4.98L12 5.5z"
-            />
+        <button aria-label="Toggle dark mode" className={styles.themeToggle} onClick={toggleTheme}>
+          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm5 14H7l5 5 5-5h5v-2h-5v-3h5V7zm7.5-7c.83 0 1.5.68 1.5 1.5S14.83 8.5 14 8.5S12.5 7.82 12.5 7c0-.83.67-1.5 1.5-1.5zM12 5.5l5 4.98L12 15l-5-4.98L12 5.5z" />
           </svg>
         </button>
-        {/* /theme toggle */}
       </div>
 
-      {/* Mobile slide-in menu -->
-      <div
-        className={`mobileMenu ${open ? 'visible' : 'hidden'}`}
-        aria-label="Mobile menu"
-      >
+      <div className={`mobileMenu ${open ? 'visible' : 'hidden'}`} aria-label="Mobile menu">
         <div className="flex flex-col h-full p-6 pt-12 gap-6">
           <button
             aria-label="Close menu"
@@ -160,7 +140,6 @@ export default function Navbar() {
           </a>
         </div>
       </div>
-      {/* /mobile slide-in menu */}
     </nav>
   );
 }
