@@ -1,0 +1,23 @@
+node_modules/
+vendor/
+.env
+dist/
+.DS_Store
+
+# local tooling
+.claude/
+CLAUDE.md
+claude.md
+.mcp.json
+*.local.md
+prompts/
+
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+boost.json
+.mcp.json
+.claude/
+.cursor/
+.junie/
+.ai/
