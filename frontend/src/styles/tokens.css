@@ -1,32 +1,30 @@
-/* Design tokens for the portfolio.
-   These are the only values allowed in the rest of the CSS.
-   Keep this file as the single source of truth for colors, spacing and motion. */
+/* Design tokens — engineering blueprint direction.
+   Deep blueprint-blue base, light-blue grid lines, one warm accent.
+   Monospace for labels, clean grotesk for headings.
+   Light and dark theme variants. */
 
 :root {
-  /* Surfaces */
-  --bg: #0f1115;
-  --bg-soft: #161922;
-  --bg-elevated: #1c2030;
-  --surface: #1b1f2b;
+  /* ── Light theme ────────────────────────────────────────────────────── */
+  --bg: #f5f7fb;
+  --bg-soft: #e8edf5;
+  --bg-elevated: #ffffff;
+  --surface: #f0f3f8;
 
-  /* Text */
-  --text: #e8eaf0;
-  --text-dim: #a4a9b8;
-  --text-faint: #6b7180;
+  --text: #1e293b;
+  --text-dim: #64748b;
+  --text-faint: #94a3b8;
 
-  /* Brand accent */
-  --accent: #6ee7b7;
-  --accent-2: #38bdf8;
-  --accent-3: #c4b5fd;
-  --accent-glow: rgba(110, 231, 183, 0.35);
+  --accent: #f59e0b;       /* warm amber accent */
+  --accent-2: #fbbf24;
+  --accent-3: #fcd34d;
+  --accent-glow: rgba(245, 158, 11, 0.18);
 
-  /* Borders */
-  --border: #2a2f3d;
-  --border-soft: #232734;
+  --border: #cbd5e1;
+  --border-soft: #e2e8f0;
 
   /* Type scale */
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; /* clean grotesk */
+  --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace; /* monospace for labels */
 
   --step-0: 0.875rem; /* 14px */
   --step-1: 1rem;     /* 16px */
@@ -62,6 +60,28 @@
 
   /* Layout */
   --nav-h: 64px;
-  --max-w: 1180px;
-  --max-w-narrow: 920px;
+  --max-w: 1280px;
+  --max-w-narrow: 960px;
+}
+
+/* ── Dark theme ───────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --bg-soft: #1e293b;
+    --bg-elevated: #1e2d4b;
+    --surface: #0d1320;
+
+    --text: #f8fafc;
+    --text-dim: #94a3b8;
+    --text-faint: #64748b;
+
+    --accent: #f59e0b;
+    --accent-2: #fbbf24;
+    --accent-3: #fcd34d;
+    --accent-glow: rgba(245, 158, 11, 0.18);
+
+    --border: #334155;
+    --border-soft: #1e293b;
+  }
 }
