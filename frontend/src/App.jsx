@@ -1,4 +1,5 @@
 import Header from './components/Header.jsx';
+import Hero from './sections/Hero';
 import About from './components/About.jsx';
 import Experience from './components/Experience.jsx';
 import Projects from './components/Projects.jsx';
@@ -28,6 +29,7 @@ export default function App() {
   return (
     <>
       <Header onNav={setNavSection} />
+      <Hero />
       <main>{renderSection()}</main>
     </>
   );
