@@ -1,93 +1,159 @@
+/* Hero — engineering blueprint. Two layered grids over the deep blue base,
+   vertical text stack, blueprint sketch on the right above 900px. */
+
 .hero {
-  min-height: 100vh;
   position: relative;
+  min-height: 100vh;
   overflow: hidden;
   background: var(--bg);
-  background-size: cover;
-  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--nav-h) + 48px) 0 48px;
+  box-sizing: border-box;
 }
 
-.heroGrid {
+/* Fine 8px grid — subtle */
+.gridFine {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.15;
   pointer-events: none;
-}
-
-.heroGridFine {
+  opacity: 0.10;
   background-image:
-    linear-gradient(var(--accent) 2px, transparent 2px),
-    linear-gradient(90deg, var(--accent) 2px, transparent 2px);
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
   background-size: 8px 8px;
-  opacity: 0.08;
-  pointer-events: none;
 }
 
-.heroContent {
+/* Bold 40px grid — clearly stronger */
+.gridBold {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(to right, var(--accent) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--accent) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Centered two-column container */
+.container {
   position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Text — vertical stack */
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 620px;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin: 0 0 16px;
+}
+
+.name {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(2.75rem, 8vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0 0 20px;
+}
+
+.pitch {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+  max-width: 520px;
+  margin: 0 0 32px;
+}
+
+/* Buttons — side by side, 16px gap, no wrap */
+.actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+.btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1;
+  padding: 14px 24px;
+  border-radius: var(--radius-s);
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-.heroName {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: clamp(3rem, 12vw, 6rem);
-  line-height: 1.1;
-  color: var(--text);
-  margin-bottom: 1rem;
+.btnPrimary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #1a1206;
 }
+.btnPrimary:hover { background: var(--accent-2); border-color: var(--accent-2); }
 
-.heroRole {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(1rem, 3vw, 1.75rem);
-  color: var(--text-dim);
-  margin-bottom: 2rem;
+.btnGhost {
+  background: transparent;
+  border-color: var(--accent);
+  color: var(--accent-2);
 }
+.btnGhost:hover { background: var(--accent-glow); }
 
-.heroButtons {
+/* Blueprint sketch column */
+.sketch {
+  width: 100%;
+  max-width: 520px;
   display: flex;
-  gap: 1rem;
   justify-content: center;
 }
 
-.heroBtn {
-  display: inline-block;
-  padding: .75rem 1.5rem;
-  border-radius: var(--radius-m);
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: .875rem;
-  transition: all .2s ease;
+/* Above 900px: two columns — text left, sketch right */
+@media (min-width: 900px) {
+  .container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 56px;
+  }
+  .text { max-width: 480px; }
 }
 
-.heroBtnPrimary {
-  background: var(--accent);
-  color: var(--text);
-  border: 2px solid var(--accent);
-}
-.heroBtnPrimary:hover { background: var(--accent-2); border-color: var(--accent-2); }
-
-.heroBtnSecondary {
-  background: transparent;
-  color: var(--accent-2);
-  border: 2px solid var(--accent-2);
-}
-.heroBtnSecondary:hover { background: var(--accent-2); }
-
-/* Responsive */
-@media (min-width: 768px) {
-  .heroContent { flex-direction: row; align-items: center; text-align: left; }
-  .heroName { font-size: 4rem; }
-  .heroRole { font-size: 1.5rem; margin-bottom: 0; margin-right: 2rem; }
+/* Reduced motion — kill entrance animation via GSAP check; no CSS animation here. */
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
 }
