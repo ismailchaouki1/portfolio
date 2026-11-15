@@ -1,5 +1,5 @@
 // Portfolio content.
-// Data populated from the user's real resume — no invented values.
+// Data populated from the user's real resume — no invented values
 
 export const personal = {
   name: 'Ismail Chaouki',
@@ -17,13 +17,42 @@ export const skills = [
   // Languages (no level)
   { category: 'Languages', items: ['JavaScript (ES6+)', 'PHP', 'Python'] },
   // Frontend
-  { category: 'Frontend', items: ['React.js', 'HTML5', 'CSS3', 'SASS', 'Bootstrap', 'Material UI', 'Chakra UI', 'GSAP', 'React Three Fiber'] },
+  {
+    category: 'Frontend',
+    items: [
+      'React.js',
+      'HTML5',
+      'CSS3',
+      'SASS',
+      'Bootstrap',
+      'Material UI',
+      'Chakra UI',
+      'GSAP',
+      'React Three Fiber',
+    ],
+  },
   // Backend
-  { category: 'Backend', items: ['Node.js', 'Express.js', 'Laravel', 'REST APIs', 'JWT Authentication'] },
+  {
+    category: 'Backend',
+    items: ['Node.js', 'Express.js', 'Laravel', 'REST APIs', 'JWT Authentication'],
+  },
   // Databases
   { category: 'Databases', items: ['MySQL', 'MongoDB', 'Firebase'] },
   // Tools & Platforms
-  { category: 'Tools & Platforms', items: ['Git', 'GitHub', 'GitLab', 'Postman', 'Vercel', 'Netlify', 'XAMPP', 'Apache', 'Laragon'] },
+  {
+    category: 'Tools & Platforms',
+    items: [
+      'Git',
+      'GitHub',
+      'GitLab',
+      'Postman',
+      'Vercel',
+      'Netlify',
+      'XAMPP',
+      'Apache',
+      'Laragon',
+    ],
+  },
   // Design
   { category: 'Design', items: ['Figma', 'Adobe XD', 'Canva'] },
   // Methodologies
@@ -76,7 +105,8 @@ export const education = [
     school: 'OFPPT',
     degree: 'Technicien Spécialisé, Développement Digital, Full Stack Web',
     year: '2024 – 2026',
-    detail: 'Intensive full-stack curriculum: HTML5, CSS3, JavaScript, React.js, Laravel, Express.js, PHP, MySQL, MongoDB, Python, REST APIs.',
+    detail:
+      'Intensive full-stack curriculum: HTML5, CSS3, JavaScript, React.js, Laravel, Express.js, PHP, MySQL, MongoDB, Python, REST APIs.',
   },
   {
     id: 'lycee',
@@ -92,21 +122,24 @@ export const projects = [
     name: 'User Activity & Audit Log Microservice',
     year: '2026',
     stack: ['React.js', 'Node.js/Express', 'MySQL', 'JWT'],
-    description: 'A decoupled, standalone microservice giving the FlexBusiness team centralized visibility into user activity across separate products (FlexDok, Wehook), without coupling to either codebase. Features: REST Ingest API with API key authentication, responsive admin dashboard, paginated and filterable event tables, event detail views.',
+    description:
+      'A decoupled, standalone microservice giving the FlexBusiness team centralized visibility into user activity across separate products (FlexDok, Wehook), without coupling to either codebase. Features: REST Ingest API with API key authentication, responsive admin dashboard, paginated and filterable event tables, event detail views.',
   },
   {
     id: 'driving-school',
     name: 'SaaS Driving School Management Platform',
     year: '2026',
     stack: ['React.js', 'Laravel', 'MySQL', 'JWT'],
-    description: 'Personal SaaS project (in active development) exploring multi-role platform architecture for managing students, instructors, scheduling, and payments at driving schools. Features: JWT-based authentication, student/instructor management, session scheduling, payment handling.',
+    description:
+      'Personal SaaS project (in active development) exploring multi-role platform architecture for managing students, instructors, scheduling, and payments at driving schools. Features: JWT-based authentication, student/instructor management, session scheduling, payment handling.',
   },
   {
     id: 'weather-app',
     name: 'Weather App & Prayer Times App',
     year: '2026',
     stack: ['React.js', 'Material UI', 'Axios', 'REST API'],
-    description: 'A Material UI interface with dynamic city-based weather search and localized prayer time calculation, consuming third-party REST APIs via Axios with client-side handling for location-based data.',
+    description:
+      'A Material UI interface with dynamic city-based weather search and localized prayer time calculation, consuming third-party REST APIs via Axios with client-side handling for location-based data.',
   },
 ];
 

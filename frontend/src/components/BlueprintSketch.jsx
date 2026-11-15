@@ -1,6 +1,6 @@
 export default function BlueprintSketch() {
   return (
-    <svg viewBox="0 0 520 360" width="100%" maxWidth="520px" className="block">
+    <svg viewBox="0 0 520 360" width="100%" className="block">
       {/* Browser window */}
       <rect
         x="40"

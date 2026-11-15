@@ -1,14 +1,18 @@
 import styles from './Navbar.module.css';
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
+import { useEffect, useState } from 'react';
 
 // Minimal blueprint-sticky navbar: IC monogram logo, links, mobile menu, theme toggle
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
-    try { return localStorage.getItem('theme'); } catch { return undefined; }
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved) return saved;
+    } catch {
+      /* ignore */
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
-  const setT = (t) => { try { localStorage.setItem('theme', t); } catch {} setTheme(t); };
 
   // IntersectionObserver to highlight active section
   useEffect(() => {
@@ -21,7 +25,7 @@ export default function Navbar() {
           }
         });
       },
-      { rootMargin: '-200px 0px' }
+      { rootMargin: '-200px 0px' },
     );
     const sections = document.querySelectorAll('section');
     sections.forEach((s) => observer.observe(s));
@@ -29,62 +33,38 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      setT('dark');
-      document.documentElement.dataset.theme = 'dark';
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      /* ignore */
     }
   }, [theme]);
+  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
 
   return (
-    <nav
-      className={styles.navContainer}
-      aria-label="Main navigation"
-    >
+    <nav className={`${styles.menu} ${open ? styles.open : ''}`}>
       <div className={styles.navContainerInner}>
         {/* IC monogram logo (monospace) */}
-        <button
-          aria-label="Home"
-          className={styles.logo}
-          onClick={() => setOpen(false)}
-        >
+        <button aria-label="Toggle menu" aria-expanded={open} onClick={() => setOpen(!open)}>
           <span className="text-xs font-mono uppercase">IC</span>
         </button>
 
         {/* Desktop links */}
         <div className={styles.navLinks}>
-          <a
-            href="#about"
-            className={styles.navLink}
-            aria-label="About"
-          >
+          <a href="#about" className={styles.navLink} aria-label="About">
             About
           </a>
-          <a
-            href="#skills"
-            className={styles.navLink}
-            aria-label="Skills"
-          >
+          <a href="#skills" className={styles.navLink} aria-label="Skills">
             Skills
           </a>
-          <a
-            href="#experience"
-            className={styles.navLink}
-            aria-label="Experience"
-          >
+          <a href="#experience" className={styles.navLink} aria-label="Experience">
             Experience
           </a>
-          <a
-            href="#projects"
-            className={styles.navLink}
-            aria-label="Projects"
-          >
+          <a href="#projects" className={styles.navLink} aria-label="Projects">
             Projects
           </a>
-          <a
-            href="#contact"
-            className={styles.navLink}
-            aria-label="Contact"
-          >
+          <a href="#contact" className={styles.navLink} aria-label="Contact">
             Contact
           </a>
         </div>
@@ -106,7 +86,7 @@ export default function Navbar() {
         <button
           aria-label="Toggle dark mode"
           className={styles.themeToggle}
-          onClick={() => setT(theme === 'dark' ? 'light' : 'dark')}
+          onClick={() => setThemeLocal(theme === 'dark' ? 'light' : 'dark')}
         >
           <svg
             className="h-5 w-5"
@@ -124,7 +104,7 @@ export default function Navbar() {
 
       {/* Mobile slide-in menu -->
       <div
-        className={styles.mobileMenu}
+        className={`mobileMenu ${open ? 'visible' : 'hidden'}`}
         aria-label="Mobile menu"
       >
         <div className="flex flex-col h-full p-6 pt-12 gap-6">
@@ -142,6 +122,7 @@ export default function Navbar() {
             href="#about"
             className={styles.mobileLink}
             aria-label="About"
+            onClick={() => setOpen(false)}
           >
             About
           </a>
@@ -149,6 +130,7 @@ export default function Navbar() {
             href="#skills"
             className={styles.mobileLink}
             aria-label="Skills"
+            onClick={() => setOpen(false)}
           >
             Skills
           </a>
@@ -156,6 +138,7 @@ export default function Navbar() {
             href="#experience"
             className={styles.mobileLink}
             aria-label="Experience"
+            onClick={() => setOpen(false)}
           >
             Experience
           </a>
@@ -163,6 +146,7 @@ export default function Navbar() {
             href="#projects"
             className={styles.mobileLink}
             aria-label="Projects"
+            onClick={() => setOpen(false)}
           >
             Projects
           </a>
@@ -170,6 +154,7 @@ export default function Navbar() {
             href="#contact"
             className={styles.mobileLink}
             aria-label="Contact"
+            onClick={() => setOpen(false)}
           >
             Contact
           </a>

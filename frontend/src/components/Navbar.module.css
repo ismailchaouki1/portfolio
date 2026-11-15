@@ -1,19 +1,92 @@
 /* Navbar module — plain CSS, no PostCSS features */
-.navContainer { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 1rem; width: 100%; box-sizing: border-box; }
-.navContainerInner { display: flex; align-items: center; gap: 1rem; }
-.logo { font-size: .75rem; font-family: 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--text); }
-.navLinks { display: flex; gap: 1rem; }
-.navLink { position: relative; color: var(--text); text-decoration: none; font-size: .875rem; transition: color .2s; }
-.navLink:hover { color: var(--accent); }
-.navLink::after { content: ''; position: absolute; inset: 0 -4px 0; border-bottom: 2px solid var(--accent); transform: scaleX(0); transition: transform .3s ease; }
-.navLink:hover::after { transform: scaleX(1); }
-.navLink.active::after { transform: scaleX(1); }
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+.navContainerInner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.logo {
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.navLinks {
+  display: flex;
+  gap: 1rem;
+}
+.navLink {
+  position: relative;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+.navLink:hover {
+  color: var(--accent);
+}
+.navLink::after {
+  content: '';
+  position: absolute;
+  inset: 0 -4px 0;
+  border-bottom: 2px solid var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.navLink:hover::after {
+  transform: scaleX(1);
+}
+.navLink.active::after {
+  transform: scaleX(1);
+}
 
 /* Mobile menu */
-.mobileToggle { display: none; width: 2.5rem; height: 2.5rem; }
-.mobileMenu { position: fixed; inset: 0; z-index: 99; background: var(--surface); left: -260px; transition: left .3s ease; padding: 2rem; }
-.mobileMenu.open { left: 0; }
-.mobileClose { position: absolute; top: 1rem; right: 1rem; color: var(--text); }
+.mobileToggle {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: var(--surface);
+  left: -260px;
+  transition: left 0.3s ease;
+  padding: 2rem;
+}
+.mobileMenu.open {
+  left: 0;
+}
+.mobileClose {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--text);
+}
 
 /* Theme toggle */
-.themeToggle { width: 2.5rem; height: 2.5rem; color: var(--text); }
+.themeToggle {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+  .menu.open {
+    display: flex;
+    flex-direction: column;
+  }
+}
