@@ -1,38 +1,43 @@
-/* Hero — engineering blueprint. Two layered grids over the deep blue base,
-   vertical text stack, blueprint sketch on the right above 900px. */
+/* Hero — engineering blueprint with deep blue base and layered blue grids */
+
+:root {
+  --hero-bg: #0a0f2a;
+  --hero-grid-fine: #7fb3ff;
+  --hero-grid-bold: #4a90e2;
+}
 
 .hero {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background: var(--bg);
+  background: var(--hero-bg);
   display: flex;
   align-items: center;
   padding: calc(var(--nav-h) + 48px) 0 48px;
   box-sizing: border-box;
 }
 
-/* Fine 8px grid — subtle */
+/* Fine 8px grid — subtle, light blue */
 .gridFine {
   position: absolute;
   inset: 0;
   pointer-events: none;
   opacity: 0.10;
   background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    linear-gradient(to right, var(--hero-grid-fine) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hero-grid-fine) 1px, transparent 1px);
   background-size: 8px 8px;
 }
 
-/* Bold 40px grid — clearly stronger */
+/* Bold 40px grid — clearly stronger, light blue */
 .gridBold {
   position: absolute;
   inset: 0;
   pointer-events: none;
   opacity: 0.22;
   background-image:
-    linear-gradient(to right, var(--accent) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--accent) 1px, transparent 1px);
+    linear-gradient(to right, var(--hero-grid-bold) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hero-grid-bold) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -65,18 +70,18 @@
   font-size: 0.875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent-2);
+  color: var(--hero-grid-fine);
   margin: 0 0 16px;
 }
 
 .name {
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: clamp(2.75rem, 8vw, 5rem);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--text);
-  margin: 0 0 20px;
+  margin: 0 0 24px;
 }
 
 .pitch {

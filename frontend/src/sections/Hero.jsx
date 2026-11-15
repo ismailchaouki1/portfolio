@@ -29,7 +29,7 @@ export default function Hero() {
           <p data-anim="label" className={styles.label}>Full Stack Web Developer</p>
           <h1 data-anim="name" className={styles.name}>Ismail Chaouki</h1>
           <p data-anim="pitch" className={styles.pitch}>
-            I build fast, accessible web apps with React, Express and Laravel.
+            Full-stack developer building fast, accessible web apps with React, Node/Express, Laravel and MySQL.
           </p>
           <div className={styles.actions}>
             <a data-anim="btn" href="#projects" className={`${styles.btn} ${styles.btnPrimary}`}>View projects</a>
