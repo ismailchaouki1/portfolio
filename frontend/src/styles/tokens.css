@@ -85,3 +85,33 @@
     --border-soft: #1e293b;
   }
 }
+
+/* ── Noise background utility ─────────────────────────────────────────── */
+.bg-noise {
+  /* Matte charcoal base with fine speckled grain */
+  /* One soft light sweep -- subtle inset gradient */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 30% 20%, var(--accent) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 70% 80%, var(--accent-2) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' fill='url(%23noise)'/%3E%3C/svg%3E");
+  background-size:
+    cover,
+    cover,
+    400% 400%;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  /* Very slow drift for light sweep (0.5% of frame per --animation-duration ms; set to 0 for static) */
+  animation: noiseSweep var(--animation-duration, 200s) linear infinite;
+}
+.data-[theme=dark] .bg-noise {
+  /* Darker noise for dark mode */
+  filter: brightness(0.6);
+}
+@keyframes noiseSweep {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 400% 400%; }
+}
+.data-[theme=dark] .no-reduce-motion *,
+.no-reduce-motion * {
+  animation: none !important;
+  transition: none !important;
+}

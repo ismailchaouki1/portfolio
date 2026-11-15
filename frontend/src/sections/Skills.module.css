@@ -1,0 +1,42 @@
+/* Skills section module */
+.sectionPadding { padding: 96px 24px; }
+.sectionMax { max-width: 1100px; margin: 0 auto; }
+
+.sectionTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.sectionSubtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(.875rem, 3vw, 1rem);
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.sectionCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 1.5rem;
+  transition: transform .2s ease;
+}
+.sectionCard:hover { transform: translateY(-2px); }
+
+/* Certifications */
+.certItem {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: .75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.certName { color: var(--text-dim); font-size: .875rem; }
+.certYear { color: var(--text-dim); opacity: .7; font-size: .75rem; }
