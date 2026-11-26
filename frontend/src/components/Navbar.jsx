@@ -41,7 +41,7 @@ export default function Navbar() {
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
 
   return (
-    <nav className={`${styles.menu} ${open ? styles.open : ''}`}>
+    <nav className={`${styles.menuContainer} ${open ? styles.open : ''}`}>
       <div className={styles.navContainerInner}>
         {/* IC monogram logo (monospace) */}
         <button

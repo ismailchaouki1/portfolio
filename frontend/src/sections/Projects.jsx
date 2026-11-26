@@ -3,11 +3,19 @@ import { projects } from '../data/content';
 import { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
 
+const getProjectImage = (projectId) => {
+  const imagePaths = {
+    'audit-log-microservice': 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect width="800" height="500" fill="%230f172a"/><rect x="50" y="80" width="700" height="360" fill="%231e293b" rx="12"/><rect x="60" y="90" width="120" height="80" fill="%23475569" rx="6"/><rect x="620" y="90" width="120" height="80" fill="%23475569" rx="6"/><rect x="60" y="180" width="340" height="60" fill="%2364748b" rx="6"/><rect x="400" y="180" width="340" height="60" fill="%2364748b" rx="6"/><rect x="60" y="260" width="340" height="60" fill="%23475569" rx="6"/><rect x="400" y="260" width="340" height="60" fill="%23475569" rx="6"/><text x="400" y="340" text-anchor="middle" fill="%23cbd5e1" font-family="monospace" font-size="24">Auth Dashboard</text><text x="400" y="380" text-anchor="middle" fill="%2394a3b8" font-family="monospace" font-size="16">React Node MySQL</text></svg>',
+    'driving-school': 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect width="800" height="500" fill="%230f172a"/><rect x="50" y="80" width="700" height="360" fill="%231e293b" rx="12"/><rect x="100" y="120" width="80" height="60" fill="%23475569" rx="6"/><rect x="220" y="120" width="80" height="60" fill="%23475569" rx="6"/><rect x="340" y="120" width="80" height="60" fill="%23475569" rx="6"/><rect x="460" y="120" width="80" height="60" fill="%23475569" rx="6"/><text x="400" y="280" text-anchor="middle" fill="%23cbd5e1" font-family="monospace" font-size="24">SaaS Dashboard</text><text x="400" y="320" text-anchor="middle" fill="%2394a3b8" font-family="monospace" font-size="16">Laravel Vue MySQL</text></svg>',
+    'weather-app': 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect width="800" height="500" fill="%230f172a"/><rect x="50" y="80" width="700" height="360" fill="%231e293b" rx="12"/><circle cx="400" cy="240" r="80" fill="%2360a5fa"/><text x="400" y="300" text-anchor="middle" fill="%23cbd5e1" font-family="monospace" font-size="20">Weather App</text><text x="400" y="340" text-anchor="middle" fill="%2394a3b8" font-family="monospace" font-size="16">React MUI Axios</text></svg>',
+  };
+  return imagePaths[projectId] || null;
+};
+
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('all');
   const gridRef = useRef(null);
 
-  // Extract unique tech stacks for filter pills
   const allTech = ['all', 'React', 'Laravel', 'Node.js/Express'];
 
   const filteredProjects = projects.filter((project) => {
@@ -37,7 +45,6 @@ export default function Projects() {
       });
     }, 50);
 
-    // 3D tilt effect on mouse move
     const handleMouseMove = (e) => {
       const card = e.currentTarget;
       const rect = card.getBoundingClientRect();
@@ -95,8 +102,14 @@ export default function Projects() {
               className={styles.projectCard}
               style={{ display: 'block', transition: 'transform 0.3s ease' }}
             >
-              <div className={styles.projectImageWrapper}>
-                <div className={styles.projectImage} />
+              <div
+                className={styles.projectImageWrapper}
+                style={{
+                  backgroundImage: getProjectImage(project.id)
+                    ? `url(${getProjectImage(project.id)})`
+                    : 'none',
+                }}
+              >
                 <div className={styles.projectOverlay}>
                   <a href="#projects" className={styles.viewProjectBtn}>
                     View Project

@@ -2,6 +2,9 @@ import styles from './Contact.module.css';
 import { personal } from '../data/content';
 import { contactApi } from '../services/api';
 import { useState, useEffect } from 'react';
+import { SiGithub } from 'react-icons/si';
+import { FaLinkedinIn } from 'react-icons/fa6';
+import { IoIosMail } from 'react-icons/io';
 
 export default function Contact() {
   const [status, setStatus] = useState({
@@ -41,7 +44,7 @@ export default function Contact() {
         honeypot: formData.get('honeypot'),
       });
       setStatus({ state: 'success', message: 'Message sent successfully!', error: false });
-    } catch (err) {
+    } catch {
       setStatus({
         state: 'error',
         message: 'Failed to send message. Please try again.',
@@ -107,11 +110,7 @@ export default function Contact() {
               {status.state === 'loading' ? 'Sending...' : 'Send'}
             </button>
             {status.state !== 'idle' && (
-              <p
-                className={
-                  status.state === 'success' ? 'text-[--text]' : 'text-[--text-dim] text-sm mt-2'
-                }
-              >
+              <p className={status.state === 'success' ? styles.statusSuccess : styles.statusError}>
                 {status.message}
               </p>
             )}
@@ -119,17 +118,20 @@ export default function Contact() {
         </div>
         <div className={styles.contactCard}>
           <h3>Get in Touch</h3>
-          <address>
-            <p>{personal.location}</p>
-            <p>
-              <a href={`mailto:${personal.email}`}>{personal.email}</a>
-            </p>
-            <div>
-              <a href={personal.github} target="_blank" rel="noopener noreferrer">
-                GitHub
+          <address className={styles.contactAddress}>
+            <p className={styles.contactLocation}>{personal.location}</p>
+            <a href={`mailto:${personal.email}`} className={styles.contactLink}>
+              <IoIosMail className={styles.socialIcon} />
+              <span>{personal.email}</span>
+            </a>
+            <div className={styles.socialLinks}>
+              <a href={personal.github} target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+                <SiGithub className={styles.socialIcon} />
+                <span>GitHub</span>
               </a>
-              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer">
-                LinkedIn
+              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+                <FaLinkedinIn className={styles.socialIcon} />
+                <span>LinkedIn</span>
               </a>
             </div>
           </address>

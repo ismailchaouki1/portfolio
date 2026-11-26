@@ -13,12 +13,19 @@ export default function Experience() {
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
       cardsRef.current.forEach((card) => {
         if (!card) return;
-        gsap.set(card, { opacity: 0, scale: 0.9 });
+
+        // Hide by default for JS users
+        gsap.set(card, { opacity: 0, y: 30 });
+
+        if (prefersReduced) {
+          // Visible immediately for users who prefer reduced motion
+          gsap.set(card, { opacity: 1, y: 0 });
+          return;
+        }
 
         ScrollTrigger.create({
           trigger: card,
@@ -28,7 +35,7 @@ export default function Experience() {
           onEnter: () => {
             gsap.to(card, {
               opacity: 1,
-              scale: 1,
+              y: 0,
               duration: 0.6,
               ease: 'back.out(1.7)',
             });

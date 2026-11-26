@@ -1,5 +1,13 @@
 /* Experience section — scroll-triggered SVG timeline with GSAP animations */
 
+/* JS failure fallback: visible by default, GSAP will hide then reveal in animation */
+@starting-style {
+  .itemCard {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .section {
   position: relative;
   min-height: 100vh;
@@ -91,13 +99,10 @@
               box-shadow var(--dur-fast) var(--ease-out),
               border-color var(--dur-fast) var(--ease-out);
   max-width: 450px;
+  min-width: 280px;
   opacity: 0;
   transform: translateY(30px);
-}
-
-.itemCard.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+  will-change: transform, opacity;
 }
 
 .itemCard:hover {

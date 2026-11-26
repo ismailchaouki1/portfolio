@@ -2,6 +2,7 @@ import styles from './Hero.module.css';
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import useMagnetic from '../hooks/useMagnetic';
+import React from 'react';
 
 const HeroScene = lazy(() => import('../components/hero/HeroScene'));
 
@@ -59,10 +60,15 @@ export default function Hero() {
           <p className={styles.label}>Full Stack Web Developer</p>
 
           <h1 className={styles.name} ref={nameRef}>
-            {('Ismail Chaouki').split('').map((char, i) => (
-              <span key={i} className="char" style={{ display: 'inline-block' }}>
-                {char === ' ' ? ' ' : char}
-              </span>
+            {('Ismail Chaouki').split(/\s+/).map((word, wi) => (
+              <React.Fragment key={wi}>
+                {word.split('').map((char, i) => (
+                  <span key={`${wi}-${i}`} className="char" style={{ display: 'inline-block' }}>
+                    {char}
+                  </span>
+                ))}
+                {wi < 1 && ' '}
+              </React.Fragment>
             ))}
           </h1>
 

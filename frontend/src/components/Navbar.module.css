@@ -1,6 +1,6 @@
 /* Navbar module — using design tokens for consistent styling */
 
-.navContainer {
+.menuContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10,9 +10,12 @@
   box-sizing: border-box;
   position: sticky;
   top: 0;
-  z-index: 100;
-  background: var(--color-bg);
+  z-index: 1000;
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(46, 58, 88, 0.4);
 }
 
 .navContainerInner {
@@ -232,16 +235,16 @@
     display: flex;
   }
 
-  .navContainer {
+  .menuContainer {
     padding: 0 var(--space-3);
   }
 
-  .menu.open {
+  .menuContainer.open {
     display: flex;
     flex-direction: column;
   }
 
-  .menu .navLinks {
+  .menuContainer.open .navLinks {
     display: none;
   }
 }
