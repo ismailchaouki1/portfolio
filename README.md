@@ -15,15 +15,9 @@ npm run dev
 npm run build
 ```
 
-## Tech Stack
-
-- **Frontend**: React + Vite, GSAP, CSS Modules
-- **Backend**: Laravel 13, MySQL, Node.js/Express
-- **Deployment**: Git, npm
-
 ## Education
 
-Technicien Spécialisé in Full Stack Web Development from OFPPT (2024–2026)
+OFPPT — Tinghir (2024–2026)
 
 ## Portfolio of Ismail Chaouki
 
