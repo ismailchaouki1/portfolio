@@ -6,7 +6,6 @@ import gsap from 'gsap';
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('all');
   const gridRef = useRef(null);
-  const cardRefs = useRef([]);
 
   // Extract unique tech stacks for filter pills
   const allTech = ['all', 'React', 'Laravel', 'Node.js/Express'];
@@ -20,13 +19,11 @@ export default function Projects() {
     if (!gridRef.current) return;
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
-      gsap.set(cardRefs.current, { opacity: 1, scale: 1, display: 'block' });
+      gsap.set(gridRef.current.children, { opacity: 1, scale: 1 });
       return;
     }
 
     const cards = gridRef.current.querySelectorAll(`.${styles.projectCard}`);
-    cardRefs.current = Array.from(cards);
-
     const tl = gsap.timeline();
     tl.set(cards, { opacity: 0, scale: 0.95 });
 
@@ -39,6 +36,36 @@ export default function Projects() {
         stagger: 0.1,
       });
     }, 50);
+
+    // 3D tilt effect on mouse move
+    const handleMouseMove = (e) => {
+      const card = e.currentTarget;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * 5;
+      const rotateY = ((x - centerX) / centerX) * -5;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    };
+
+    const handleMouseLeave = (e) => {
+      e.currentTarget.style.transform = 'perspective(1000px)';
+    };
+
+    const cardsArray = Array.from(cards);
+    cardsArray.forEach((card) => {
+      card.addEventListener('mousemove', handleMouseMove);
+      card.addEventListener('mouseleave', handleMouseLeave);
+    });
+
+    return () => {
+      cardsArray.forEach((card) => {
+        card.removeEventListener('mousemove', handleMouseMove);
+        card.removeEventListener('mouseleave', handleMouseLeave);
+      });
+    };
   }, [activeFilter]);
 
   return (
@@ -66,7 +93,7 @@ export default function Projects() {
             <div
               key={`${project.id}-${index}`}
               className={styles.projectCard}
-              style={{ display: 'block' }}
+              style={{ display: 'block', transition: 'transform 0.3s ease' }}
             >
               <div className={styles.projectImageWrapper}>
                 <div className={styles.projectImage} />

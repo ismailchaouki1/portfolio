@@ -31,47 +31,58 @@
   text-wrap: balance;
 }
 
-/* SVG timeline line (vertical) */
+/* SVG timeline line (vertical) - solid central spine */
 .timelineSvg {
   position: absolute;
   left: 50%;
   top: 0;
-  bottom: 0;
   transform: translateX(-50%);
-  width: 4px;
+  width: 2px;
+  height: 100%;
+  background: var(--color-accent);
   z-index: 1;
-  opacity: 0.3;
+  transform-origin: top center;
 }
 
-/* Timeline items container */
+/* Timeline items container - absolute positioned for zig-zag */
 .timelineItems {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
-  padding: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: var(--space-3xl) 0;
   margin: 0 auto;
-}
-
-/* Individual timeline item */
-.timelineItem {
-  display: flex;
-  align-items: center;
-  gap: var(--space-6);
-  position: relative;
   z-index: 2;
 }
 
+/* Individual timeline item - zig-zag layout */
+.timelineItem {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-bottom: var(--space-12);
+}
+
 .itemMarker {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: var(--color-accent);
   flex-shrink: 0;
+  z-index: 3;
   box-shadow: 0 0 0 4px var(--color-bg);
+  position: relative;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.itemMarker.is-visible {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 6px var(--color-accent);
 }
 
 .itemCard {
-  flex: 1;
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-m);
@@ -79,7 +90,14 @@
   transition: transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-fast) var(--ease-out),
               border-color var(--dur-fast) var(--ease-out);
-  max-width: 500px;
+  max-width: 450px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.itemCard.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .itemCard:hover {
@@ -131,25 +149,33 @@
   background: var(--color-accent);
 }
 
-/* Responsive: stack items on the left/right alternating */
+/* Zig-zag layout: odd items left, even items right */
 @media (min-width: 768px) {
-  .timelineItem:nth-child(odd) {
-    justify-content: flex-start;
-  }
-
-  .timelineItem:nth-child(even) {
-    justify-content: flex-end;
+  .timelineItem:nth-child(odd) .itemCard {
+    margin-left: 0;
+    margin-right: auto;
+    transform: translateX(-20px);
   }
 
   .timelineItem:nth-child(even) .itemCard {
     margin-right: 0;
     margin-left: auto;
-    max-width: 480px;
+    transform: translateX(20px);
+  }
+
+  .timelineItem:nth-child(odd) .itemMarker {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .timelineItem:nth-child(even) .itemMarker {
+    right: 50%;
+    transform: translateX(50%);
   }
 }
 
 @media (min-width: 900px) {
   .timelineSvg {
-    opacity: 0.5;
+    opacity: 1;
   }
 }
