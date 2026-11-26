@@ -8,6 +8,11 @@
   padding: 0 var(--space-4);
   width: 100%;
   box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .navContainerInner {
@@ -16,29 +21,53 @@
   gap: var(--space-4);
 }
 
-.logo {
-  font-size: var(--text-xs);
+.menuBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-7);
+  height: var(--space-7);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.menuLogo {
   font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-text);
 }
 
+.menuIcon,
+.themeIcon {
+  width: var(--space-6);
+  height: var(--space-6);
+  stroke: currentColor;
+  fill: none;
+}
+
 .navLinks {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-6);
 }
 
 .navLink {
-  position: relative;
+  display: block;
   color: var(--color-text);
   text-decoration: none;
   font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
   transition: color var(--dur-fast) var(--ease-out);
+  position: relative;
 }
 
 .navLink:hover,
-.navLink.active::after {
+.navLink.active {
   color: var(--color-accent);
 }
 
@@ -51,20 +80,51 @@
   transition: transform 0.3s ease;
 }
 
-.navLink:hover::after {
-  transform: scaleX(1);
-}
-
+.navLink:hover::after,
 .navLink.active::after {
   transform: scaleX(1);
 }
 
+.navLink:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-6);
+  height: var(--space-6);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.themeToggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
 /* Mobile menu toggle button */
 .mobileToggle {
-  display: none;
-  width: var(--space-7);
-  height: var(--space-7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-6);
+  height: var(--space-6);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
   color: var(--color-text);
+}
+
+.mobileToggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
 }
 
 /* Mobile menu container */
@@ -72,40 +132,49 @@
   position: fixed;
   inset: 0;
   z-index: 99;
-  background: var(--color-surface);
-  left: -260px;
-  transition: left var(--dur-fast) var(--ease-out);
-  padding: var(--space-8);
+  background: var(--color-bg);
+  transform: translateX(-100%);
+  transition: transform var(--dur-mid) var(--ease-out);
 }
 
 .mobileMenu.open {
-  left: 0;
+  transform: translateX(0);
 }
 
-.mobileClose {
+.mobileMenuContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: var(--space-6);
+  padding: var(--space-8);
+}
+
+.mobileMenuBtn {
   position: absolute;
   top: var(--space-4);
   right: var(--space-4);
-  color: var(--color-text);
-}
-
-/* Theme toggle button */
-.themeToggle {
-  width: var(--space-7);
-  height: var(--space-7);
-  color: var(--color-text);
+  width: var(--space-6);
+  height: var(--space-6);
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  color: var(--color-text);
+}
+
+.mobileMenuBtn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
 }
 
 .mobileLink {
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text);
   text-decoration: none;
-  font-size: var(--text-lg);
-  padding: var(--space-3) 0;
-  display: block;
   transition: color var(--dur-fast) var(--ease-out);
 }
 
@@ -113,13 +182,46 @@
   color: var(--color-accent);
 }
 
-@media (max-width: 768px) {
-  .menu {
+.mobileLink:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: var(--radius-s);
+  padding: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .menuBtn,
+  .mobileToggle {
     display: none;
+  }
+
+  .mobileMenu,
+  .mobileMenuContent {
+    display: none;
+  }
+
+  .navLinks {
+    display: flex;
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 767px) {
+  .menuBtn,
+  .themeToggle {
+    display: flex;
+  }
+
+  .navContainer {
+    padding: 0 var(--space-3);
   }
 
   .menu.open {
     display: flex;
     flex-direction: column;
+  }
+
+  .menu .navLinks {
+    display: none;
   }
 }

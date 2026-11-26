@@ -1,7 +1,6 @@
 import styles from './Navbar.module.css';
 import { useEffect, useState } from 'react';
 
-// Minimal blueprint-sticky navbar: IC monogram logo, links, mobile menu, theme toggle
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
@@ -14,7 +13,6 @@ export default function Navbar() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 
-  // IntersectionObserver to highlight active section
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -46,62 +44,97 @@ export default function Navbar() {
     <nav className={`${styles.menu} ${open ? styles.open : ''}`}>
       <div className={styles.navContainerInner}>
         {/* IC monogram logo (monospace) */}
-        <button aria-label="Toggle menu" aria-expanded={open} onClick={() => setOpen(!open)}>
-          <span className="text-xs font-mono uppercase">IC</span>
+        <button
+          className={styles.menuBtn}
+          aria-label="Toggle menu"
+          aria-expanded={open}
+          onClick={() => setOpen(!open)}
+        >
+          <span className={styles.menuLogo}>IC</span>
         </button>
 
         {/* Desktop links */}
         <div className={styles.navLinks}>
-          <a href="#about" className={styles.navLink} aria-label="About">
+          <a href="#about" className={styles.navLink} aria-label="About navigation">
             About
           </a>
-          <a href="#skills" className={styles.navLink} aria-label="Skills">
+          <a href="#skills" className={styles.navLink} aria-label="Skills navigation">
             Skills
           </a>
-          <a href="#experience" className={styles.navLink} aria-label="Experience">
+          <a href="#experience" className={styles.navLink} aria-label="Experience navigation">
             Experience
           </a>
-          <a href="#projects" className={styles.navLink} aria-label="Projects">
+          <a href="#projects" className={styles.navLink} aria-label="Projects navigation">
             Projects
           </a>
-          <a href="#contact" className={styles.navLink} aria-label="Contact">
+          <a href="#contact" className={styles.navLink} aria-label="Contact navigation">
             Contact
           </a>
         </div>
 
         <button
-          aria-label="Open menu"
           className={styles.mobileToggle}
+          aria-label="Open menu"
           onClick={() => setOpen(true)}
         >
-          <span className="sr-only">Open menu</span>
-          <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 12l2-2l10 10L9 21l2-2L3 12z" />
+          <svg
+            className={styles.menuIcon}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
           </svg>
         </button>
-        <button aria-label="Toggle dark mode" className={styles.themeToggle} onClick={toggleTheme}>
-          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm5 14H7l5 5 5-5h5v-2h-5v-3h5V7zm7.5-7c.83 0 1.5.68 1.5 1.5S14.83 8.5 14 8.5S12.5 7.82 12.5 7c0-.83.67-1.5 1.5-1.5zM12 5.5l5 4.98L12 15l-5-4.98L12 5.5z" />
+        <button
+          className={styles.themeToggle}
+          aria-label="Toggle dark mode"
+          onClick={toggleTheme}
+        >
+          <svg
+            className={styles.themeIcon}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="5" />
+            <path d="M12 1v1M12 21v1M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M1 12h2M21 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
           </svg>
         </button>
       </div>
 
-      <div className={`mobileMenu ${open ? 'visible' : 'hidden'}`} aria-label="Mobile menu">
-        <div className="flex flex-col h-full p-6 pt-12 gap-6">
+      <div className={`${styles.mobileMenu} ${open ? styles.mobileMenuOpen : ''}`}>
+        <div className={styles.mobileMenuContent}>
           <button
+            className={styles.mobileMenuBtn}
             aria-label="Close menu"
-            className={styles.mobileClose}
             onClick={() => setOpen(false)}
           >
-            <span className="sr-only">Close menu</span>
-            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18 6L6 18M6 6l12 12" />
+            <svg
+              className={styles.menuIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
           <a
             href="#about"
             className={styles.mobileLink}
-            aria-label="About"
+            aria-label="About navigation"
             onClick={() => setOpen(false)}
           >
             About
@@ -109,7 +142,7 @@ export default function Navbar() {
           <a
             href="#skills"
             className={styles.mobileLink}
-            aria-label="Skills"
+            aria-label="Skills navigation"
             onClick={() => setOpen(false)}
           >
             Skills
@@ -117,7 +150,7 @@ export default function Navbar() {
           <a
             href="#experience"
             className={styles.mobileLink}
-            aria-label="Experience"
+            aria-label="Experience navigation"
             onClick={() => setOpen(false)}
           >
             Experience
@@ -125,7 +158,7 @@ export default function Navbar() {
           <a
             href="#projects"
             className={styles.mobileLink}
-            aria-label="Projects"
+            aria-label="Projects navigation"
             onClick={() => setOpen(false)}
           >
             Projects
@@ -133,7 +166,7 @@ export default function Navbar() {
           <a
             href="#contact"
             className={styles.mobileLink}
-            aria-label="Contact"
+            aria-label="Contact navigation"
             onClick={() => setOpen(false)}
           >
             Contact
