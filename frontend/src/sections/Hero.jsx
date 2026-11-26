@@ -56,7 +56,7 @@ export default function Hero() {
 
       <div className={styles.container}>
         <div className={styles.text}>
-          <p className={styles.label}>{process.env.VITE_ROLE || 'Full Stack Web Developer'}</p>
+          <p className={styles.label}>Full Stack Web Developer</p>
 
           <h1 className={styles.name} ref={nameRef}>
             {('Ismail Chaouki').split('').map((char, i) => (

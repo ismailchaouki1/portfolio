@@ -92,7 +92,7 @@ ol {
 
 p,
 li {
-  text-wrap: pretty;
+  /* No text-wrap - let wrap handle naturally */
 }
 
 h1,
@@ -102,6 +102,11 @@ h4 {
   margin: 0;
   line-height: 1.1;
   letter-spacing: -0.02em;
+  font-family: var(--font-display);
+}
+
+.section-title {
+  font-family: var(--font-display);
 }
 
 /* Reveal-on-scroll animation hook.
