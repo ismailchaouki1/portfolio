@@ -1,42 +1,115 @@
-/* Skills section module */
-.sectionPadding { padding: 96px 24px; }
-.sectionMax { max-width: 1100px; margin: 0 auto; }
+/* Skills section module — using design tokens */
 
-.sectionTitle {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.1;
-  color: var(--text);
-  margin-bottom: 1rem;
+.section {
+  position: relative;
+  min-height: 100vh;
+  padding: var(--space-3xl) var(--space-4);
+  background: var(--color-bg);
+  overflow: hidden;
 }
 
-.sectionSubtitle {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(.875rem, 3vw, 1rem);
-  color: var(--text-dim);
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sectionHead {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.sectionTitle {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-bold);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.sectionDesc {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  color: var(--color-text-dim);
   line-height: 1.6;
-  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .sectionCard {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-m);
-  padding: 1.5rem;
-  transition: transform .2s ease;
+  padding: var(--space-6);
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
-.sectionCard:hover { transform: translateY(-2px); }
 
-/* Certifications */
-.certItem {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-m);
-  padding: .75rem 1rem;
+.sectionCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.sectionTitleCard {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  margin: 0 0 var(--space-4);
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: var(--space-3);
 }
-.certName { color: var(--text-dim); font-size: .875rem; }
-.certYear { color: var(--text-dim); opacity: .7; font-size: .75rem; }
+
+.skillsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skillItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.skillItem:last-child {
+  border-bottom: none;
+}
+
+.skillIcon {
+  flex-shrink: 0;
+  width: var(--space-6);
+  height: var(--space-6);
+  color: var(--color-accent);
+  fill: currentColor;
+}
+
+.skillName {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+
+.skillsGrid {
+  display: grid;
+  gap: var(--space-6);
+  padding: 0 var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .skillsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .skillsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
