@@ -7,6 +7,7 @@ import useMagnetic from '../hooks/useMagnetic';
 export default function Hero() {
   const heroRef = useRef(null);
   const bgRef = useRef(null);
+
   const {
     ref: magneticRef,
     pos: magneticPos,
@@ -20,7 +21,26 @@ export default function Hero() {
   useEffect(() => {
     if (heroRef.current && typeof window !== 'undefined') {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) return;
+
+      // Parallax grid effect
+      let startX = 0, startY = 0;
+      const handleMouseMove = (e) => {
+        if (prefersReduced) return;
+        startX = (e.clientX / window.innerWidth - 0.5) * 4;
+        startY = (e.clientY / window.innerHeight - 0.5) * 4;
+        gsap.set(heroRef.current.querySelector('.technicalGrid'), {
+          x: startX,
+          y: startY,
+        });
+      };
+
+      const cleanupParallax = () => {
+        if (!prefersReduced && heroRef.current) {
+          gsap.set(heroRef.current.querySelector('.technicalGrid'), { x: 0, y: 0 });
+        }
+      };
+
+      window.addEventListener('mousemove', handleMouseMove);
 
       const ctx = gsap.context(() => {
         const tl = gsap.timeline({ defaults: { duration: 0.9, ease: 'power3.out' } });
@@ -57,15 +77,18 @@ export default function Hero() {
           );
       }, heroRef);
 
-      return () => ctx.revert();
+      return () => {
+        cleanupParallax();
+        window.removeEventListener('mousemove', handleMouseMove);
+        ctx.revert();
+      };
     }
   }, []);
 
   return (
     <section className={styles.hero} ref={heroRef}>
       <div className={styles.bgLayer} ref={bgRef} />
-      <div className={styles.gridFine} />
-      <div className={styles.gridBold} />
+      <div className={`${styles.technicalGrid} technicalGrid`} />
 
       <div className={styles.container}>
         <div className={styles.text}>
