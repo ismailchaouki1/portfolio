@@ -1,46 +1,89 @@
-/* Hero — split-layout with GSAP entrance animation and magnetic CTA */
+/* Hero — split-layout with GSAP entrance animation and R3F scene */
 
 :root {
-  --hero-bg: var(--color-bg);
-  --grid-line-color: rgba(255, 255, 255, 0.04);
+  --radial-opacity: 0.08;
+  --noise-intensity: 0.02;
 }
 
 .hero {
   position: relative;
   min-height: 100dvh;
   overflow: hidden;
-  background: var(--hero-bg);
+  background: var(--color-bg);
   display: flex;
   align-items: center;
   padding: calc(var(--nav-h) + var(--space-xl)) 0 var(--space-xl);
   box-sizing: border-box;
 }
 
-/* Background layer for entrance animation */
 .bgLayer {
   position: absolute;
   inset: 0;
-  background: var(--hero-bg);
-  transform: scale(0.95);
-  opacity: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(217, 133, 53, var(--radial-opacity)) 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 80%, rgba(230, 177, 108, var(--radial-opacity)) 0%, transparent 40%),
+    var(--color-bg);
+  opacity: 1;
+  z-index: 1;
+  will-change: transform;
+}
+
+.bgLayer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 24%,
+      rgba(255, 255, 255, var(--noise-intensity)) 25%,
+      rgba(255, 255, 255, var(--noise-intensity)) 26%,
+      transparent 27%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 24%,
+      rgba(255, 255, 255, var(--noise-intensity)) 25%,
+      rgba(255, 255, 255, var(--noise-intensity)) 26%,
+      transparent 27%
+    );
+  background-size: 4px 4px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.glowBlob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.25;
   z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
-/* JS failure fallback: visible by default, GSAP will hide then reveal in animation */
-@starting-style {
-  .bgLayer {
-    opacity: 1;
-    transform: scale(1);
-  }
+.glowBlob:nth-child(1) {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle at 30% 30%, rgba(217, 133, 53, 0.35), transparent 70%);
+  top: -120px;
+  left: -120px;
 }
 
-/* Technical Editorial Grid — 64px spacing, 1px lines */
+.glowBlob:nth-child(2) {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle at 70% 70%, rgba(230, 177, 108, 0.25), transparent 70%);
+  bottom: -100px;
+  right: -100px;
+}
+
 .technicalGrid {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 1;
-  z-index: 1;
+  opacity: 0.7;
+  z-index: 2;
   background-image:
     linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px);
@@ -48,10 +91,9 @@
   transform: translate3d(0, 0, 0);
 }
 
-/* Centered split-layout container */
 .container {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
@@ -63,7 +105,6 @@
   gap: var(--space-xl);
 }
 
-/* Text — vertical stack for mobile */
 .text {
   display: flex;
   flex-direction: column;
@@ -82,11 +123,11 @@
 }
 
 .name {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: var(--font-weight-bold);
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(3.5rem, 11vw, 10rem);
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: var(--color-text);
   margin: 0 0 var(--space-6);
   text-wrap: balance;
@@ -101,7 +142,6 @@
   margin: 0 0 var(--space-xl);
 }
 
-/* Buttons — side by side, 16px gap, no wrap */
 .actions {
   display: flex;
   gap: var(--space-4);
@@ -155,22 +195,43 @@
   background: var(--color-accent-glow);
 }
 
-/* Blueprint sketch column */
-.s sketch {
-  width: 100%;
-  max-width: 520px;
+.scrollCue {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--space-xl);
+  gap: 4px;
 }
 
-.sketch {
-  width: 100%;
-  max-width: 520px;
-  display: flex;
-  justify-content: center;
+.scrollText {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+  animation: scrollBlink 1.5s ease-in-out infinite;
 }
 
-/* Above 900px: split layout — text left, sketch right */
+.scrollLine {
+  width: 18px;
+  height: 2px;
+  background: var(--color-accent);
+  opacity: 0.8;
+  animation: scrollLineGrow 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollBlink {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes scrollLineGrow {
+  0% { transform: scaleX(0); transform-origin: left; }
+  50% { transform: scaleX(1); }
+  100% { transform: scaleX(0); transform-origin: left; }
+}
+
 @media (min-width: 900px) {
   .container {
     flex-direction: row;
@@ -188,7 +249,7 @@
   }
 }
 
-/* Reduced motion — kill entrance animation via GSAP check; no CSS animation here. */
 @media (prefers-reduced-motion: reduce) {
   .btn { transition: none; }
+  .scrollText, .scrollLine { animation: none; opacity: 0.5; }
 }

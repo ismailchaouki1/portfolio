@@ -1,12 +1,13 @@
 import styles from './Hero.module.css';
-import BlueprintSketch from '../components/BlueprintSketch';
-import { useEffect, useRef } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import useMagnetic from '../hooks/useMagnetic';
 
+const HeroScene = lazy(() => import('../components/hero/HeroScene'));
+
 export default function Hero() {
   const heroRef = useRef(null);
-  const bgRef = useRef(null);
+  const nameRef = useRef(null);
 
   const {
     ref: magneticRef,
@@ -19,91 +20,58 @@ export default function Hero() {
   } = useMagnetic();
 
   useEffect(() => {
-    if (heroRef.current && typeof window !== 'undefined') {
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!heroRef.current || typeof window === 'undefined') return;
 
-      // Parallax grid effect
-      let startX = 0, startY = 0;
-      const handleMouseMove = (e) => {
-        if (prefersReduced) return;
-        startX = (e.clientX / window.innerWidth - 0.5) * 4;
-        startY = (e.clientY / window.innerHeight - 0.5) * 4;
-        gsap.set(heroRef.current.querySelector('.technicalGrid'), {
-          x: startX,
-          y: startY,
-        });
-      };
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      const cleanupParallax = () => {
-        if (!prefersReduced && heroRef.current) {
-          gsap.set(heroRef.current.querySelector('.technicalGrid'), { x: 0, y: 0 });
-        }
-      };
+    const ctx = gsap.context(() => {
+      if (prefersReduced) {
+        gsap.set(nameRef.current, { opacity: 1, y: 0 });
+        return;
+      }
 
-      window.addEventListener('mousemove', handleMouseMove);
+      const nameChars = nameRef.current.querySelectorAll('.char');
+      const tl = gsap.timeline({ defaults: { duration: 0.8, ease: 'power3.out' } });
 
-      const ctx = gsap.context(() => {
-        const tl = gsap.timeline({ defaults: { duration: 0.9, ease: 'power3.out' } });
+      tl.from(nameChars, {
+        opacity: 0,
+        y: 30,
+        stagger: 0.05,
+        delay: 0.3,
+      });
+    }, heroRef);
 
-        tl.from(bgRef.current, {
-          scale: 0.95,
-          opacity: 0,
-          duration: 1.2,
-          ease: 'power2.inOut',
-        })
-          .from(
-            heroRef.current.querySelector('[data-anim="label"]'),
-            { opacity: 0, y: 24 },
-            0.4,
-          )
-          .from(
-            heroRef.current.querySelector('[data-anim="name"]'),
-            { opacity: 0, y: 32 },
-            '-=,0.3',
-          )
-          .from(
-            heroRef.current.querySelector('[data-anim="pitch"]'),
-            { opacity: 0, y: 24 },
-            '-=,0.3',
-          )
-          .from(
-            heroRef.current.querySelectorAll('[data-anim="btn"]'),
-            {
-              opacity: 0,
-              y: 24,
-              stagger: 0.15,
-            },
-            '-=,0.3',
-          );
-      }, heroRef);
-
-      return () => {
-        cleanupParallax();
-        window.removeEventListener('mousemove', handleMouseMove);
-        ctx.revert();
-      };
-    }
+    return () => ctx.revert();
   }, []);
 
   return (
     <section className={styles.hero} ref={heroRef}>
-      <div className={styles.bgLayer} ref={bgRef} />
-      <div className={`${styles.technicalGrid} technicalGrid`} />
+      <Suspense fallback={
+        <div className={styles.bgLayer} style={{ opacity: 1 }} />
+      }>
+        <HeroScene />
+      </Suspense>
+
+      <div className={styles.technicalGrid} aria-hidden="true" />
 
       <div className={styles.container}>
         <div className={styles.text}>
-          <p data-anim="label" className={styles.label}>
-            Full Stack Web Developer
-          </p>
-          <h1 data-anim="name" className={styles.name}>
-            Ismail Chaouki
+          <p className={styles.label}>{process.env.VITE_ROLE || 'Full Stack Web Developer'}</p>
+
+          <h1 className={styles.name} ref={nameRef}>
+            {('Ismail Chaouki').split('').map((char, i) => (
+              <span key={i} className="char" style={{ display: 'inline-block' }}>
+                {char === ' ' ? ' ' : char}
+              </span>
+            ))}
           </h1>
-          <p data-anim="pitch" className={styles.pitch}>
+
+          <p className={styles.pitch}>
             Full-stack developer building fast, accessible web apps with React, Node/Express, Laravel and MySQL.
           </p>
+
           <div className={styles.actions}>
             <a
-              data-anim="btn"
               href="#projects"
               className={`${styles.btn} ${styles.btnPrimary}`}
               ref={magneticRef}
@@ -117,14 +85,15 @@ export default function Hero() {
             >
               View projects
             </a>
-            <a data-anim="btn" href="#contact" className={`${styles.btn} ${styles.btnGhost}`}>
+            <a href="#contact" className={`${styles.btn} ${styles.btnGhost}`}>
               Contact
             </a>
           </div>
-        </div>
 
-        <div className={styles.sketch}>
-          <BlueprintSketch />
+          <div className={styles.scrollCue}>
+            <span className={styles.scrollText}>Scroll</span>
+            <div className={styles.scrollLine} />
+          </div>
         </div>
       </div>
     </section>
