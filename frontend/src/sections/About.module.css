@@ -21,13 +21,19 @@
 }
 
 .sectionCard {
-  background: var(--bg-elevated);
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border);
   border-radius: var(--radius-m);
   padding: 1.5rem;
-  transition: transform .2s ease;
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
-.sectionCard:hover { transform: translateY(-2px); }
+.sectionCard:hover {
+  transform: translateY(-2px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
 
 /* Education school/degree */
 .educationSchool {
@@ -49,13 +55,17 @@
 
 /* Certifications */
 .certItem {
-  background: var(--bg-elevated);
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border);
   border-radius: var(--radius-m);
   padding: .75rem 1rem;
   display: flex;
   align-items: center;
   gap: .5rem;
+  transition: transform 0.3s ease;
+}
+.certItem:hover {
+  transform: translateY(-2px);
 }
 .certName { color: var(--text-dim); font-size: .875rem; }
 .certYear { color: var(--text-dim); opacity: .7; font-size: .75rem; }

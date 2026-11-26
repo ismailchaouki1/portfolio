@@ -40,13 +40,11 @@
 }
 
 .sectionCard {
-  background: var(--color-bg-elevated);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-m);
   padding: var(--space-6);
-  transition: transform var(--dur-fast) var(--ease-out),
-              box-shadow var(--dur-fast) var(--ease-out);
-  box-shadow: var(--shadow-sm);
+  transition: all var(--dur-fast) var(--ease-out);
 }
 
 .sectionCard:hover {
@@ -77,6 +75,13 @@
   gap: var(--space-3);
   padding: var(--space-3) 0;
   border-bottom: 1px solid var(--color-border);
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  perspective: 1000px;
+}
+
+.skillItem:hover {
+  transform: perspective(1000px) translateZ(20px) rotateX(5deg) rotateY(5deg);
+  box-shadow: var(--shadow-md);
 }
 
 .skillItem:last-child {

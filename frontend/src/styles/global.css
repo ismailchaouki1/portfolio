@@ -35,10 +35,6 @@ body {
   color: var(--color-text-on-accent);
 }
 
-::selection * {
-  color: var(--color-text-on-accent);
-}
-
 /* Scrollbar theming */
 ::-webkit-scrollbar {
   width: 8px;

@@ -2,6 +2,11 @@ import styles from './Skills.module.css';
 import { skills } from '../data/content';
 import { SiJavascript, SiPhp, SiPython, SiReact, SiHtml5, SiCss, SiSass, SiBootstrap, SiGulp, SiNodedotjs, SiExpress, SiLaravel, SiMysql, SiMongodb, SiFirebase, SiGit, SiGithub, SiGitlab, SiPostman, SiVercel, SiNetlify, SiDocker, SiInkscape, SiFigma, SiVite, SiNpm, SiC, SiCplusplus } from 'react-icons/si';
 import { FaBug, FaLightbulb, FaCube, FaPuzzlePiece } from 'react-icons/fa6';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const iconMap = {
   // Languages
@@ -75,10 +80,32 @@ const SkillCard = ({ category, items }) => {
 };
 
 export default function Skills() {
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    const headerTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: headerRef.current,
+        start: 'top bottom',
+        end: 'bottom bottom',
+        scrub: true,
+      },
+    });
+
+    headerTl.to(headerRef.current, {
+      y: -20,
+      ease: 'none',
+    });
+
+    return () => {
+      if (headerTl) headerTl.kill();
+    };
+  }, []);
+
   return (
     <section id="skills" className={styles.section}>
       <div className={styles.container}>
-        <div className={styles.sectionHead}>
+        <div className={styles.sectionHead} ref={headerRef}>
           <h2 className={styles.sectionTitle}>Skills</h2>
           <p className={styles.sectionDesc}>
             Proficient in modern web technologies across languages, frontend frameworks, backend
