@@ -16,7 +16,7 @@ export default function Experience() {
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      cardsRef.current.forEach((card, i) => {
+      cardsRef.current.forEach((card) => {
         if (!card) return;
         gsap.set(card, { opacity: 0, scale: 0.9 });
 
@@ -78,11 +78,13 @@ export default function Experience() {
         </svg>
 
         <div className={styles.timelineItems}>
-          {experience.map((exp) => (
+          {experience.map((exp, itemIdx) => (
             <div
               key={exp.id}
               className={styles.timelineItem}
-              ref={(el) => (cardsRef.current[i] = el)}
+              ref={(el) => {
+                cardsRef.current[itemIdx] = el;
+              }}
             >
               <div className={styles.itemMarker} aria-hidden="true" />
               <div className={styles.itemCard}>
@@ -93,8 +95,8 @@ export default function Experience() {
                   {exp.start} – {exp.end}
                 </p>
                 <ul className={styles.itemList}>
-                  {exp.bullets.map((bullet, j) => (
-                    <li key={j}>{bullet}</li>
+                  {exp.bullets.map((bullet, bulletIdx) => (
+                    <li key={bulletIdx}>{bullet}</li>
                   ))}
                 </ul>
               </div>
