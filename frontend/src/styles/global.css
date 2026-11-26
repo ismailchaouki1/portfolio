@@ -29,6 +29,42 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Selection theming */
+::selection {
+  background-color: var(--accent);
+  color: var(--color-text-on-accent);
+}
+
+::selection * {
+  color: var(--color-text-on-accent);
+}
+
+/* Scrollbar theming */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-2);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--color-bg);
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -51,10 +87,16 @@ button {
   cursor: pointer;
 }
 
-ul {
+ul,
+ol {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+p,
+li {
+  text-wrap: balance;
 }
 
 h1,
