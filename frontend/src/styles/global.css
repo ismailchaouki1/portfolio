@@ -96,7 +96,7 @@ ol {
 
 p,
 li {
-  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 h1,
