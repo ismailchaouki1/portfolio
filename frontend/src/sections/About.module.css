@@ -9,6 +9,7 @@
   line-height: 1.1;
   color: var(--text);
   margin-bottom: 1rem;
+  text-wrap: balance;
 }
 
 .sectionSubtitle {

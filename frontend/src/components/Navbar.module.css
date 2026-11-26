@@ -90,6 +90,16 @@
   outline-offset: 4px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .navLink {
+    transition: none;
+  }
+
+  .navLink::after {
+    transition: none;
+  }
+}
+
 .themeToggle {
   display: flex;
   align-items: center;
@@ -135,6 +145,16 @@
   background: var(--color-bg);
   transform: translateX(-100%);
   transition: transform var(--dur-mid) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobileMenu {
+    transition: none;
+  }
+
+  .mobileMenu.open {
+    transform: none;
+  }
 }
 
 .mobileMenu.open {

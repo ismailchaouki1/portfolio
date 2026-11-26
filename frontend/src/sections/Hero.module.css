@@ -7,7 +7,7 @@
 
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   background: var(--hero-bg);
   display: flex;
@@ -24,6 +24,14 @@
   transform: scale(0.95);
   opacity: 0;
   z-index: 0;
+}
+
+/* JS failure fallback: visible by default, GSAP will hide then reveal in animation */
+@starting-style {
+  .bgLayer {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Technical Editorial Grid — 64px spacing, 1px lines */
@@ -81,6 +89,7 @@
   letter-spacing: -0.02em;
   color: var(--color-text);
   margin: 0 0 var(--space-6);
+  text-wrap: balance;
 }
 
 .pitch {
@@ -108,7 +117,7 @@
   font-weight: var(--font-weight-semibold);
   font-size: var(--text-sm);
   line-height: 1;
-  padding: 14px 24px;
+  padding: 12px 24px;
   border-radius: var(--radius-s);
   border: 1.5px solid transparent;
   text-decoration: none;
@@ -128,7 +137,7 @@
 .btnPrimary {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: #1a1206;
+  color: var(--color-text-on-accent);
 }
 
 .btnPrimary:hover {

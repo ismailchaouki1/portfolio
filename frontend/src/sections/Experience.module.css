@@ -28,6 +28,7 @@
   letter-spacing: -0.02em;
   color: var(--color-text);
   margin: 0;
+  text-wrap: balance;
 }
 
 /* SVG timeline line (vertical) */
@@ -83,7 +84,7 @@
 
 .itemCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
   border-color: var(--color-accent);
 }
 

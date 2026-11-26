@@ -1,10 +1,10 @@
 /* Contact section — form with blueprint grid, honeypot protection */
 .section {
-  padding: 96px 24px;
+  padding: var(--space-3xl) var(--space-6);
 }
 .sectionHead {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: var(--space-xl);
 }
 .sectionTitle {
   font-family: var(--font-sans);
@@ -13,12 +13,13 @@
   line-height: 1.2;
   color: var(--text);
   margin: 0 0 8px;
+  text-wrap: balance;
 }
 .contactGrid {
-  max-width: 1100px;
+  max-width: var(--max-w);
   display: grid;
-  gap: 32px;
-  margin-top: 32px;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
 }
 @media (min-width: 900px) {
   .contactGrid {
@@ -26,29 +27,29 @@
   }
 }
 .contactCard {
-  max-width: 1100px;
+  max-width: var(--max-w);
   border-radius: var(--radius-s);
   background: var(--card);
   border: 1px solid var(--border);
-  padding: 32px;
+  padding: var(--space-4);
 }
 .contactForm {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-3);
 }
 .contactLabel {
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   letter-spacing: 0.08em;
   color: var(--accent-2);
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-s);
 }
 .contactInput,
 .contactTextarea {
   width: 100%;
-  padding: 14px 16px;
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-s);
   border: 1.5px solid var(--border);
   background: var(--input);
@@ -68,12 +69,12 @@
 }
 .contactSubmit {
   align-self: flex-start;
-  padding: 14px 24px;
+  padding: var(--space-3) var(--space-6);
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 0.9375rem;
+  font-size: var(--text-sm);
   line-height: 1;
-  color: #1a1206;
+  color: var(--color-text-on-accent);
   background: var(--accent);
   border: 1.5px solid var(--accent);
   border-radius: var(--radius-s);

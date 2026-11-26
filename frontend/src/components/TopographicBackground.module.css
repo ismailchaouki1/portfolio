@@ -5,5 +5,5 @@
   height: 100%;
   display: block;
   pointer-events: none;
-  color: #93c5fd; /* line color, read by the canvas */
+  color: var(--color-accent); /* line color, read by the canvas */
 }

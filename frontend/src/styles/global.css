@@ -67,12 +67,20 @@ h4 {
 }
 
 /* Reveal-on-scroll animation hook.
-   Elements with .reveal start hidden and fade/slide up when they enter the viewport. */
+   Elements with .reveal start hidden and fade/slide up when they enter the viewport.
+   Visible by default when JS fails via @starting-style. */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity var(--dur-mid) var(--ease-out),
     transform var(--dur-mid) var(--ease-out);
+}
+
+@starting-style {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .reveal.is-visible {
@@ -86,6 +94,16 @@ h4 {
     transform: none;
     transition: none;
   }
+}
+
+/* Focus ring for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* Shared layout primitives */
@@ -117,6 +135,7 @@ h4 {
 .section-head h2 {
   font-size: clamp(var(--step-4), 4vw, var(--step-6));
   font-weight: 700;
+  text-wrap: balance;
 }
 
 .section-head p {

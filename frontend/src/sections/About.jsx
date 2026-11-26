@@ -28,7 +28,7 @@ export default function About() {
   }, []);
 
   return (
-    <section className="about-section min-h-screen relative overflow-x-hidden bg-[--bg] bg-noise data-[theme=dark]:bg-[--bg-dark]">
+    <section className="about-section min-h-dvh relative overflow-x-hidden bg-[--bg] bg-noise data-[theme=dark]:bg-[--bg-dark]">
       <NoiseLayer />
 
       <div className={styles.sectionPadding}>
