@@ -1,90 +1,123 @@
-/* Navbar module — plain CSS, no PostCSS features */
+/* Navbar module — using design tokens for consistent styling */
+
 .navContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
-  padding: 0 1rem;
+  height: var(--nav-h);
+  padding: 0 var(--space-4);
   width: 100%;
   box-sizing: border-box;
 }
+
 .navContainerInner {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
+
 .logo {
-  font-size: 0.75rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text);
+  color: var(--color-text);
 }
+
 .navLinks {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
 }
+
 .navLink {
   position: relative;
-  color: var(--text);
+  color: var(--color-text);
   text-decoration: none;
-  font-size: 0.875rem;
-  transition: color 0.2s;
+  font-size: var(--text-sm);
+  transition: color var(--dur-fast) var(--ease-out);
 }
-.navLink:hover {
-  color: var(--accent);
+
+.navLink:hover,
+.navLink.active::after {
+  color: var(--color-accent);
 }
+
 .navLink::after {
   content: '';
   position: absolute;
   inset: 0 -4px 0;
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 2px solid var(--color-accent);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
+
 .navLink:hover::after {
   transform: scaleX(1);
 }
+
 .navLink.active::after {
   transform: scaleX(1);
 }
 
-/* Mobile menu */
+/* Mobile menu toggle button */
 .mobileToggle {
   display: none;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: var(--space-7);
+  height: var(--space-7);
+  color: var(--color-text);
 }
+
+/* Mobile menu container */
 .mobileMenu {
   position: fixed;
   inset: 0;
   z-index: 99;
-  background: var(--surface);
+  background: var(--color-surface);
   left: -260px;
-  transition: left 0.3s ease;
-  padding: 2rem;
+  transition: left var(--dur-fast) var(--ease-out);
+  padding: var(--space-8);
 }
+
 .mobileMenu.open {
   left: 0;
 }
+
 .mobileClose {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  color: var(--text);
+  top: var(--space-4);
+  right: var(--space-4);
+  color: var(--color-text);
 }
 
-/* Theme toggle */
+/* Theme toggle button */
 .themeToggle {
-  width: 2.5rem;
-  height: 2.5rem;
-  color: var(--text);
+  width: var(--space-7);
+  height: var(--space-7);
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mobileLink {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--text-lg);
+  padding: var(--space-3) 0;
+  display: block;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.mobileLink:hover {
+  color: var(--color-accent);
 }
 
 @media (max-width: 768px) {
   .menu {
     display: none;
   }
+
   .menu.open {
     display: flex;
     flex-direction: column;

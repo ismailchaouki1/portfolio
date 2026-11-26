@@ -1,117 +1,183 @@
-/* Design tokens — engineering blueprint direction.
-   Deep blueprint-blue base, light-blue grid lines, one warm accent.
-   Monospace for labels, clean grotesk for headings.
-   Light and dark theme variants. */
+/* Design Tokens — Strict architecture for consistent theming and spacing */
 
 :root {
-  /* ── Light theme ────────────────────────────────────────────────────── */
-  --bg: #f5f7fb;
-  --bg-soft: #e8edf5;
-  --bg-elevated: #ffffff;
-  --surface: #f0f3f8;
+  /* ── Color Palette ───────────────────────────────────────────────────────── */
+  /* Primary: Deep navy with amber accent for interactive elements */
+  --color-bg: #0a0f1a;
+  --color-bg-soft: #141b33;
+  --color-bg-elevated: #1a233f;
+  --color-bg-hover: #25345e;
 
-  --text: #1e293b;
-  --text-dim: #64748b;
-  --text-faint: #94a3b8;
+  /* Surfaces */
+  --color-surface: #0d1624;
+  --color-surface-muted: #161e30;
 
-  --accent: #f59e0b;       /* warm amber accent */
-  --accent-2: #fbbf24;
-  --accent-3: #fcd34d;
-  --accent-glow: rgba(245, 158, 11, 0.18);
+  /* Text */
+  --color-text: #e0e0e0;
+  --color-text-dim: #8a9ab4;
+  --color-text-faint: #6b7c93;
+  --color-text-inverse: #ffffff;
 
-  --border: #cbd5e1;
-  --border-soft: #e2e8f0;
+  /* Borders */
+  --color-border: #2e3a58;
+  --color-border-soft: #3a4b68;
 
-  /* Type scale */
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; /* clean grotesk */
-  --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace; /* monospace for labels */
+  /* Accent (amber/gold) */
+  --color-accent: #d98535;
+  --color-accent-2: #e6b16c;
+  --color-accent-3: #f0d18f;
+  --color-accent-glow: rgba(217, 133, 53, 0.15);
 
-  --step-0: 0.875rem; /* 14px */
-  --step-1: 1rem;     /* 16px */
-  --step-2: 1.25rem;  /* 20px */
-  --step-3: 1.5rem;   /* 24px */
-  --step-4: 1.875rem; /* 30px */
-  --step-5: 2.375rem; /* 38px */
-  --step-6: 3rem;     /* 48px */
-  --step-7: 3.75rem;  /* 60px */
+  /* ── Typography ──────────────────────────────────────────────────────────── */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
 
-  /* Spacing */
-  --space-xs: 0.5rem;   /* 8px */
-  --space-s: 0.75rem;   /* 12px */
-  --space-m: 1rem;      /* 16px */
-  --space-l: 1.5rem;    /* 24px */
-  --space-xl: 2.5rem;   /* 40px */
-  --space-2xl: 4rem;    /* 64px */
-  --space-3xl: 6rem;    /* 96px */
+  /* Fluid typography scale using clamp() */
+  --text-xs: clamp(0.7rem, 1.5vw + 0.5rem, 0.8125rem);
+  --text-sm: clamp(0.875rem, 2vw + 0.4rem, 0.9375rem);
+  --text-base: clamp(0.9375rem, 2vw + 0.45rem, 1rem);
+  --text-lg: clamp(1rem, 2.5vw + 0.5rem, 1.125rem);
+  --text-xl: clamp(1.25rem, 3vw + 0.75rem, 1.25rem);
+  --text-2xl: clamp(1.5rem, 4vw + 1rem, 1.5rem);
+  --text-3xl: clamp(1.875rem, 5vw + 1.25rem, 2rem);
+  --text-4xl: clamp(2.25rem, 6vw + 1.5rem, 2.5rem);
+  --text-5xl: clamp(2.75rem, 7vw + 1.75rem, 3rem);
+  --text-6xl: clamp(3.5rem, 9vw + 2rem, 4rem);
 
-  /* Radius */
+  /* Heading weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ── Spacing Scale ──────────────────────────────────────────────────────── */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 2rem;
+  --space-8: 2.5rem;
+  --space-9: 3rem;
+  --space-10: 4rem;
+  --space-11: 5rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
+
+  /* Aliases for semantic usage */
+  --space-xs: var(--space-2);
+  --space-s: var(--space-3);
+  --space-m: var(--space-4);
+  --space-l: var(--space-6);
+  --space-xl: var(--space-8);
+  --space-2xl: var(--space-10);
+  --space-3xl: var(--space-12);
+
+  /* ── Border Radius ──────────────────────────────────────────────────────── */
+  --radius-xs: 4px;
   --radius-s: 8px;
-  --radius-m: 14px;
-  --radius-l: 22px;
-  --radius-pill: 999px;
+  --radius-m: 12px;
+  --radius-l: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
 
-  /* Motion */
+  /* ── Motion ─────────────────────────────────────────────────────────────── */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+
   --dur-fast: 180ms;
   --dur-mid: 320ms;
-  --dur-slow: 600ms;
+  --dur-slow: 500ms;
 
-  /* Layout */
-  --nav-h: 64px;
-  --max-w: 1280px;
-  --max-w-narrow: 960px;
+  /* ── Layout ───────────────────────────────────────────────────────────── */
+  --nav-height: var(--space-8);
+  --max-width: 1280px;
+  --max-width-narrow: 960px;
+
+  /* Breakpoints for responsive design */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 900px;
+  --breakpoint-xl: 1024px;
+  --breakpoint-2xl: 1280px;
 }
 
-/* ── Dark theme ───────────────────────────────────────────────────────── */
+/* ── Dark Theme Override ─────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f172a;
-    --bg-soft: #1e293b;
-    --bg-elevated: #1e2d4b;
-    --surface: #0d1320;
+    --color-bg: #0a0f1a;
+    --color-bg-soft: #141b33;
+    --color-bg-elevated: #1a233f;
+    --color-bg-hover: #25345e;
 
-    --text: #f8fafc;
-    --text-dim: #94a3b8;
-    --text-faint: #64748b;
+    --color-surface: #0d1624;
+    --color-surface-muted: #161e30;
 
-    --accent: #f59e0b;
-    --accent-2: #fbbf24;
-    --accent-3: #fcd34d;
-    --accent-glow: rgba(245, 158, 11, 0.18);
+    --color-text: #e0e0e0;
+    --color-text-dim: #8a9ab4;
+    --color-text-faint: #6b7c93;
+    --color-text-inverse: #ffffff;
 
-    --border: #334155;
-    --border-soft: #1e293b;
+    --color-border: #2e3a58;
+    --color-border-soft: #3a4b68;
+
+    --color-accent: #d98535;
+    --color-accent-2: #e6b16c;
+    --color-accent-3: #f0d18f;
+    --color-accent-glow: rgba(217, 133, 53, 0.15);
   }
 }
 
-/* ── Noise background utility ─────────────────────────────────────────── */
+/* ── Semantic Aliases (for backward compatibility with existing code) ─────── */
+:root {
+  --bg: var(--color-bg);
+  --text: var(--color-text);
+  --text-dim: var(--color-text-dim);
+  --text-faint: var(--color-text-faint);
+  --border: var(--color-border);
+  --border-soft: var(--color-border-soft);
+  --accent: var(--color-accent);
+  --accent-2: var(--color-accent-2);
+  --accent-3: var(--color-accent-3);
+  --accent-glow: var(--color-accent-glow);
+  --bg-soft: var(--color-bg-soft);
+  --bg-elevated: var(--color-bg-elevated);
+  --surface: var(--color-surface);
+  --font-mono: var(--font-mono);
+  --font-sans: var(--font-sans);
+  --step-0: var(--text-xs);
+  --step-1: var(--text-sm);
+  --step-2: var(--text-base);
+  --step-3: var(--text-lg);
+  --step-4: var(--text-xl);
+  --step-5: var(--text-2xl);
+  --step-6: var(--text-3xl);
+  --step-7: var(--text-4xl);
+  --radius-s: var(--radius-s);
+  --radius-m: var(--radius-m);
+  --radius-l: var(--radius-l);
+  --radius-pill: var(--radius-pill);
+  --dur-fast: var(--dur-fast);
+  --dur-mid: var(--dur-mid);
+  --dur-slow: var(--dur-slow);
+  --ease-out: var(--ease-out);
+  --nav-h: var(--nav-height);
+  --max-w: var(--max-width);
+  --max-w-narrow: var(--max-width-narrow);
+}
+
+/* ── Noise background utility ───────────────────────────────────────────── */
 .bg-noise {
-  /* Matte charcoal base with fine speckled grain */
-  /* One soft light sweep -- subtle inset gradient */
   background-image:
     radial-gradient(ellipse 80% 50% at 30% 20%, var(--accent) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 70% 80%, var(--accent-2) 0%, transparent 50%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' fill='url(%23noise)'/%3E%3C/svg%3E");
-  background-size:
-    cover,
-    cover,
-    400% 400%;
-  background-repeat: no-repeat, no-repeat, no-repeat;
-  /* Very slow drift for light sweep (0.5% of frame per --animation-duration ms; set to 0 for static) */
-  animation: noiseSweep var(--animation-duration, 200s) linear infinite;
+    radial-gradient(ellipse 60% 40% at 70% 80%, var(--accent-2) 0%, transparent 50%);
+  background-size: cover, cover;
 }
-.data-[theme=dark] .bg-noise {
-  /* Darker noise for dark mode */
+
+/* Theme-aware noise overlay */
+[data-theme="dark"] .bg-noise {
   filter: brightness(0.6);
-}
-@keyframes noiseSweep {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 400% 400%; }
-}
-.data-[theme=dark] .no-reduce-motion *,
-.no-reduce-motion * {
-  animation: none !important;
-  transition: none !important;
 }
