@@ -1,4 +1,4 @@
-/* Hero — engineering blueprint with deep blue base and layered blue grids using design tokens */
+/* Hero — split-layout with GSAP entrance animation and magnetic CTA */
 
 :root {
   --hero-bg: var(--color-bg);
@@ -17,12 +17,23 @@
   box-sizing: border-box;
 }
 
+/* Background layer for entrance animation */
+.bgLayer {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-bg);
+  transform: scale(0.95);
+  opacity: 0;
+  z-index: 0;
+}
+
 /* Fine 8px grid — subtle, light blue */
 .gridFine {
   position: absolute;
   inset: 0;
   pointer-events: none;
   opacity: 0.10;
+  z-index: 1;
   background-image:
     linear-gradient(to right, var(--hero-grid-fine) 1px, transparent 1px),
     linear-gradient(to bottom, var(--hero-grid-fine) 1px, transparent 1px);
@@ -35,16 +46,17 @@
   inset: 0;
   pointer-events: none;
   opacity: 0.22;
+  z-index: 1;
   background-image:
     linear-gradient(to right, var(--hero-grid-bold) 1px, transparent 1px),
     linear-gradient(to bottom, var(--hero-grid-bold) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-/* Centered two-column container */
+/* Centered split-layout container */
 .container {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
@@ -52,11 +64,11 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
   align-items: center;
+  gap: var(--space-xl);
 }
 
-/* Text — vertical stack */
+/* Text — vertical stack for mobile */
 .text {
   display: flex;
   flex-direction: column;
@@ -148,6 +160,13 @@
 }
 
 /* Blueprint sketch column */
+.s sketch {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  justify-content: center;
+}
+
 .sketch {
   width: 100%;
   max-width: 520px;
@@ -155,7 +174,7 @@
   justify-content: center;
 }
 
-/* Above 900px: two columns — text left, sketch right */
+/* Above 900px: split layout — text left, sketch right */
 @media (min-width: 900px) {
   .container {
     flex-direction: row;
@@ -166,6 +185,10 @@
 
   .text {
     max-width: 480px;
+  }
+
+  .sketch {
+    margin-left: var(--space-l);
   }
 }
 
