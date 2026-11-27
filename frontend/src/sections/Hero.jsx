@@ -1,9 +1,11 @@
-import { useRef } from 'react';
+import { Suspense, lazy, useRef, useState, useEffect } from 'react';
 import { useReveal } from '../hooks/useReveal';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import RotatingText from '../components/reactbits/RotatingText/RotatingText';
 import StarBorder from '../components/reactbits/StarBorder/StarBorder';
 import styles from './Hero.module.css';
+
+const Threads = lazy(() => import('../components/reactbits/Threads/Threads'));
 
 const roles = [
   'Full Stack Web Developer',
@@ -12,9 +14,35 @@ const roles = [
   'REST APIs & JWT',
 ];
 
+function BackgroundFallback() {
+  return (
+    <div
+      className={styles.bgLayer}
+      aria-hidden="true"
+      style={{
+        background: 'radial-gradient(ellipse at 30% 20%, rgba(217, 133, 53, 0.08) 0%, transparent 40%)',
+        opacity: 1,
+      }}
+    />
+  );
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReduced(mq.matches);
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  return reduced;
+}
+
 export default function Hero() {
   const heroRef = useRef(null);
   const nameRef = useRef(null);
+  const prefersReduced = usePrefersReducedMotion();
 
   useReveal(heroRef, { once: true });
 
@@ -23,7 +51,24 @@ export default function Hero() {
   return (
     <ErrorBoundary title="Hero Section Error">
       <section className={styles.hero} ref={heroRef}>
-        <div className={styles.bgLayer} aria-hidden="true" />
+        {prefersReduced ? (
+          <BackgroundFallback />
+        ) : (
+          <ErrorBoundary title="Background Error" fallback={<BackgroundFallback />}>
+            <Suspense fallback={<BackgroundFallback />}>
+              <Threads
+                color="var(--color-accent)"
+                opacity={0.35}
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  zIndex: 1,
+                  pointerEvents: 'none',
+                }}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
         <div className={styles.bgOverlay} aria-hidden="true" />
 
         <div className={styles.container}>
