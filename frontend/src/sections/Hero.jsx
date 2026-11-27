@@ -1,7 +1,8 @@
-import { useRef, useState, useEffect } from 'react';
-import { gsap } from 'gsap';
+import { useRef } from 'react';
 import { useReveal } from '../hooks/useReveal';
 import { ErrorBoundary } from '../components/ErrorBoundary';
+import RotatingText from '../components/reactbits/RotatingText/RotatingText';
+import StarBorder from '../components/reactbits/StarBorder/StarBorder';
 import styles from './Hero.module.css';
 
 const roles = [
@@ -14,38 +15,8 @@ const roles = [
 export default function Hero() {
   const heroRef = useRef(null);
   const nameRef = useRef(null);
-  const roleRef = useRef(null);
-  const [roleIndex, setRoleIndex] = useState(0);
 
   useReveal(heroRef, { once: true });
-
-  useEffect(() => {
-    const roleEl = roleRef.current;
-    if (!roleEl) return;
-
-    const tl = gsap.timeline({
-      repeat: -1,
-      repeatDelay: 2,
-    });
-
-    roles.forEach((_, i) => {
-      tl.to(roleEl, {
-        opacity: i === roleIndex ? 1 : 0,
-        y: i === roleIndex ? 0 : 20,
-        duration: 0.6,
-        ease: 'power2.out',
-      }, i * 0.8);
-    });
-
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 2000);
-
-    return () => {
-      tl.kill();
-      clearInterval(interval);
-    };
-  }, [roleIndex]);
 
   const cvUrl = import.meta.env.VITE_CV_URL;
 
@@ -70,7 +41,11 @@ export default function Hero() {
             </h1>
 
             <div className={styles.roleContainer}>
-              <span className={styles.roleText} ref={roleRef}>{roles[roleIndex]}</span>
+              <RotatingText
+                texts={roles}
+                rotationInterval={2500}
+                color="var(--color-accent)"
+              />
             </div>
 
             <p className={styles.pitch}>
@@ -80,21 +55,23 @@ export default function Hero() {
             </p>
 
             <div className={styles.actions}>
-              <a
+              <StarBorder
+                as="a"
                 href="#projects"
-                className={`${styles.btn} ${styles.btnPrimary}`}
+                style={{ fontFamily: 'var(--font-sans)', fontWeight: 600 }}
               >
                 View projects
-              </a>
+              </StarBorder>
               {cvUrl && (
-                <a
+                <StarBorder
+                  as="a"
                   href={cvUrl}
-                  className={`${styles.btn} ${styles.btnGhost}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  style={{ fontFamily: 'var(--font-sans)', fontWeight: 600 }}
                 >
                   Download CV
-                </a>
+                </StarBorder>
               )}
             </div>
 
