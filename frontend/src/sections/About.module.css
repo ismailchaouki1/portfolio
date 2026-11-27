@@ -1,4 +1,4 @@
-/* About section — split layout with 12-col grid, portrait + bio */
+/* About section — split layout with portrait and bio, clean and simple */
 
 .aboutSection {
   position: relative;
@@ -8,22 +8,20 @@
   overflow: hidden;
 }
 
-.bgGlow {
+.bgLayer {
   position: absolute;
   inset: 0;
-  pointer-events: none;
+  background: var(--color-bg);
+  z-index: 1;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(217, 133, 53, 0.08) 0%, transparent 40%);
   opacity: 0.3;
   z-index: 1;
-  background: radial-gradient(
-    ellipse at 30% 20%,
-    rgba(217, 133, 53, 0.15) 0%,
-    transparent 40%
-  ),
-  radial-gradient(
-    ellipse at 70% 80%,
-    rgba(230, 177, 108, 0.12) 0%,
-    transparent 40%
-  );
+  pointer-events: none;
 }
 
 .container {
@@ -33,7 +31,6 @@
   margin: 0 auto;
 }
 
-/* 12-col split grid */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -41,7 +38,6 @@
   align-items: center;
 }
 
-/* Portrait wrapper */
 .portraitWrapper {
   display: flex;
   justify-content: center;
@@ -57,7 +53,6 @@
   image-rendering: -webkit-optimize-contrast;
 }
 
-/* Content wrapper */
 .contentWrapper {
   display: flex;
   flex-direction: column;
@@ -75,47 +70,31 @@
   text-wrap: balance;
 }
 
-.sectionText {
+.paragraph {
   font-family: var(--font-sans);
   font-size: var(--text-lg);
   line-height: 1.7;
   color: var(--color-text);
-  max-width: 600px;
   margin: 0;
 }
 
-/* Stat counters */
-.stats {
+.factsRow {
   display: flex;
   gap: var(--space-xl);
   flex-wrap: wrap;
   margin-top: var(--space-4);
 }
 
-.statItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.statValue {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-accent);
-  line-height: 1;
-}
-
-.statLabel {
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
+.factItem {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
   color: var(--color-text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-s);
 }
 
-/* Education timeline */
 .timeline {
   margin-top: var(--space-xl);
 }
@@ -183,18 +162,9 @@
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-text-dim);
-  margin: 0 0 8px;
-}
-
-.timelineDetail {
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  color: var(--color-text-dim);
-  line-height: 1.5;
   margin: 0;
 }
 
-/* Responsive breakpoints */
 @media (min-width: 1440px) {
   .grid {
     grid-template-columns: 1.2fr 1fr;
@@ -254,21 +224,13 @@
 }
 
 @media (max-width: 390px) {
-  .stats {
+  .factsRow {
     flex-direction: column;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-3);
   }
 
-  .sectionText {
+  .paragraph {
     font-size: var(--text-base);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .portraitWrapper,
-  .contentWrapper {
-    opacity: 1;
-    clip-path: none;
   }
 }

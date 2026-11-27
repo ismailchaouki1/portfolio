@@ -1,109 +1,139 @@
+import { Suspense, lazy, useRef, useState, useEffect } from 'react';
+import { useReveal } from '../hooks/useReveal';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+import RotatingText from '../components/reactbits/RotatingText/RotatingText';
+import StarBorder from '../components/reactbits/StarBorder/StarBorder';
 import styles from './Hero.module.css';
-import { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import useMagnetic from '../hooks/useMagnetic';
-import React from 'react';
 
-const HeroScene = lazy(() => import('../components/hero/HeroScene'));
+const Threads = lazy(() => import('../components/reactbits/Threads/Threads'));
+
+const roles = [
+  'Full Stack Web Developer',
+  'React & Node.js',
+  'Laravel & MySQL',
+  'REST APIs & JWT',
+];
+
+function BackgroundFallback() {
+  return (
+    <div
+      className={styles.bgLayer}
+      aria-hidden="true"
+      style={{
+        background: 'radial-gradient(ellipse at 30% 20%, rgba(217, 133, 53, 0.08) 0%, transparent 40%)',
+        opacity: 1,
+      }}
+    />
+  );
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReduced(mq.matches);
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  return reduced;
+}
 
 export default function Hero() {
   const heroRef = useRef(null);
   const nameRef = useRef(null);
+  const prefersReduced = usePrefersReducedMotion();
 
-  const {
-    ref: magneticRef,
-    pos: magneticPos,
-    isActive: _isMagneticActive,
-    handleMouseEnter: handleMouseEnterMag,
-    handleMouseLeave: handleMouseLeaveMag,
-    handleMouseMove: handleMouseMoveMag,
-    applyTransform: _applyMagneticTransform,
-  } = useMagnetic();
+  useReveal(heroRef, { once: true });
 
-  useEffect(() => {
-    if (!heroRef.current || typeof window === 'undefined') return;
-
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const ctx = gsap.context(() => {
-      if (prefersReduced) {
-        gsap.set(nameRef.current, { opacity: 1, y: 0 });
-        return;
-      }
-
-      const nameChars = nameRef.current.querySelectorAll('.char');
-      const tl = gsap.timeline({ defaults: { duration: 0.8, ease: 'power3.out' } });
-
-      tl.from(nameChars, {
-        opacity: 0,
-        y: 30,
-        stagger: 0.05,
-        delay: 0.3,
-      });
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
+  const cvUrl = import.meta.env.VITE_CV_URL;
 
   return (
-    <section className={styles.hero} ref={heroRef}>
-      <Suspense fallback={
-        <div className={styles.bgLayer} style={{ opacity: 1 }} />
-      }>
-        <HeroScene />
-      </Suspense>
+    <ErrorBoundary title="Hero Section Error">
+      <section className={styles.hero} ref={heroRef}>
+        {prefersReduced ? (
+          <BackgroundFallback />
+        ) : (
+          <ErrorBoundary title="Background Error" fallback={<BackgroundFallback />}>
+            <Suspense fallback={<BackgroundFallback />}>
+              <Threads
+                color="var(--color-accent)"
+                opacity={0.35}
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  zIndex: 1,
+                  pointerEvents: 'none',
+                }}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+        <div className={styles.bgOverlay} aria-hidden="true" />
 
-      <div className={styles.technicalGrid} aria-hidden="true" />
+        <div className={styles.container}>
+          <div className={styles.text}>
+            <p className={styles.label}>Full Stack Web Developer</p>
 
-      <div className={styles.container}>
-        <div className={styles.text}>
-          <p className={styles.label}>Full Stack Web Developer</p>
+            <h1 className={styles.name} ref={nameRef}>
+              <span className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+                Ismail
+              </span>
+              <span style={{ display: 'inline-block' }}>&nbsp;</span>
+              <span className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+                Chaouki
+              </span>
+            </h1>
 
-          <h1 className={styles.name} ref={nameRef}>
-            {('Ismail Chaouki').split(/\s+/).map((word, wi) => (
-              <React.Fragment key={wi}>
-                {wi > 0 && <span className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>&nbsp;</span>}
-                <span className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
-                  {word.split('').map((char, i) => (
-                    <span key={`${wi}-${i}`} className="char" style={{ display: 'inline-block' }}>
-                      {char}
-                    </span>
-                  ))}
-                </span>
-              </React.Fragment>
-            ))}
-          </h1>
+            <div className={styles.roleContainer}>
+              <RotatingText
+                texts={roles}
+                rotationInterval={2500}
+                color="var(--color-accent)"
+              />
+            </div>
 
-          <p className={styles.pitch}>
-            Full-stack developer building fast, accessible web apps with React, Node/Express, Laravel and MySQL.
-          </p>
+            <p className={styles.pitch}>
+              Full-stack developer building fast, accessible web apps with React, Node/Express, Laravel and MySQL.
+              Currently interning at FlexBusiness on an audit-log microservice and at Codveda, where I shipped
+              7 projects end-to-end.
+            </p>
 
-          <div className={styles.actions}>
-            <a
-              href="#projects"
-              className={`${styles.btn} ${styles.btnPrimary}`}
-              ref={magneticRef}
-              onMouseEnter={handleMouseEnterMag}
-              onMouseLeave={handleMouseLeaveMag}
-              onMouseMove={handleMouseMoveMag}
-              style={{
-                transform: `translate3d(${magneticPos.x}px, ${magneticPos.y}px, 0)`,
-                transition: 'transform 0.15s ease-out',
-              }}
-            >
-              View projects
-            </a>
-            <a href="#contact" className={`${styles.btn} ${styles.btnGhost}`}>
-              Contact
-            </a>
-          </div>
+            <div className={styles.actions}>
+              <StarBorder
+                as="a"
+                href="#projects"
+                style={{ fontFamily: 'var(--font-sans)', fontWeight: 600 }}
+              >
+                View projects
+              </StarBorder>
+              {cvUrl && (
+                <StarBorder
+                  as="a"
+                  href={cvUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ fontFamily: 'var(--font-sans)', fontWeight: 600 }}
+                >
+                  Download CV
+                </StarBorder>
+              )}
+            </div>
 
-          <div className={styles.scrollCue}>
-            <span className={styles.scrollText}>Scroll</span>
-            <div className={styles.scrollLine} />
+            <div className={styles.techStrip}>
+              <span className={styles.techItem}>React.js</span>
+              <span className={styles.techItem}>Node.js</span>
+              <span className={styles.techItem}>Express.js</span>
+              <span className={styles.techItem}>Laravel</span>
+              <span className={styles.techItem}>MySQL</span>
+              <span className={styles.techItem}>MongoDB</span>
+              <span className={styles.techItem}>Firebase</span>
+              <span className={styles.techItem}>JavaScript</span>
+              <span className={styles.techItem}>PHP</span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </ErrorBoundary>
   );
 }

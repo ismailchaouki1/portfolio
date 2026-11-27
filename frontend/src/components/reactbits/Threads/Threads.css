@@ -1,0 +1,24 @@
+/*
+ * MIT + Commons Clause License Condition v1.0
+ *
+ * Copyright (c) 2026 David Haz
+ *
+ * This code is from react-bits (https://github.com/davidhac/react-bits)
+ * Used under MIT + Commons Clause license.
+ * You may use this code in your application, website, or product
+ * but may not sell or redistribute the component itself.
+ */
+
+.threads-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.threads-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
