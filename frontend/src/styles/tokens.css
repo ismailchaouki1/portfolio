@@ -1,7 +1,7 @@
 /* Design Tokens — Single source of truth for the portfolio */
 
 :root {
-  /* ── Colors (Navy/Amber identity) ──────────────────────────────── */
+  /* ── Colors (Navy/Amber identity - Dark Theme as default) ─────────── */
   --color-bg: #0a0f1a;
   --color-bg-soft: #141b33;
   --color-bg-elevated: #1a233f;
@@ -106,28 +106,6 @@
   --overlay-dark: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, transparent 70%);
 }
 
-/* ── Dark Theme Override (default) ───────────────────────────────── */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0a0f1a;
-    --color-bg-soft: #141b33;
-    --color-bg-elevated: #1a233f;
-    --color-bg-hover: #25345e;
-    --color-surface: #0d1624;
-    --color-surface-muted: #161e30;
-    --color-text: #e0e0e0;
-    --color-text-dim: #8a9ab4;
-    --color-text-faint: #6b7c93;
-    --color-text-inverse: #ffffff;
-    --color-border: #2e3a58;
-    --color-border-soft: #3a4b68;
-    --color-accent: #d98535;
-    --color-accent-2: #e6b16c;
-    --color-accent-3: #f0d18f;
-    --color-accent-glow: rgba(217, 133, 53, 0.15);
-  }
-}
-
 /* ── Light Theme Override ──────────────────────────────────────── */
 [data-theme="light"] {
   --color-bg: #ffffff;
@@ -187,7 +165,7 @@
   --max-w-narrow: var(--max-width-narrow);
 }
 
-/* ── Theme toggle script ─────────────────────────────────────────── */
+/* ── Theme toggle visibility ───────────────────────────────────── */
 [data-theme="dark"] .theme-toggle,
 [data-theme="dark"] .theme-icon[data-theme="light"],
 [data-theme="light"] .theme-toggle,

@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Experience() {
   const sectionRef = useRef(null);
   const lineRef = useRef(null);
-  const cardsRef = [];
+  const cardsRef = useRef([]);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -85,9 +85,15 @@ export default function Experience() {
 
         <div className={styles.timelineItems}>
           {experience.map((exp, itemIdx) => {
-            const date = new Date(exp.start);
-            const monthYear = date.toLocaleDateString('en-US', { month: 'short', year: 'short' });
-            const endYear = exp.end ? new Date(exp.end).toLocaleDateString('en-US', { month: 'short', year: 'short' }) : 'Present';
+            const parseDate = (dateStr) => {
+              const d = new Date(dateStr);
+              if (isNaN(d.getTime())) return 'N/A';
+              const options = { month: 'short', year: 'numeric' };
+              try { return d.toLocaleDateString('en-US', options); }
+              catch { return d.getFullYear(); }
+            };
+            const monthYear = parseDate(exp.start);
+            const endYear = exp.end ? parseDate(exp.end) : 'Present';
 
             return (
               <div
