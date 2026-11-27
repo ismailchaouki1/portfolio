@@ -1,0 +1,37 @@
+/* Loader — counter animation, skip-able, shown once per session */
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: pointer;
+  transition: opacity var(--dur-mid) var(--ease-out);
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.loader-counter {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 20vw, 8rem);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.loader-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}

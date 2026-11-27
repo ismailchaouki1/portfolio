@@ -1,5 +1,5 @@
 import styles from './Navbar.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -12,6 +12,60 @@ export default function Navbar() {
     }
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
+  const mobileMenuRef = useRef(null);
+  const firstFocusableRef = useRef(null);
+  const lastFocusableRef = useRef(null);
+
+  // Focus trap for mobile menu
+  useEffect(() => {
+    if (!open || !mobileMenuRef.current) return;
+
+    const focusableElements = mobileMenuRef.current.querySelectorAll(
+      'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusableElements.length === 0) return;
+
+    firstFocusableRef.current = focusableElements[0];
+    lastFocusableRef.current = focusableElements[focusableElements.length - 1];
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+      } else if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (firstFocusableRef.current && e.target === firstFocusableRef.current) {
+            e.preventDefault();
+            lastFocusableRef.current?.focus();
+          }
+        } else {
+          if (lastFocusableRef.current && e.target === lastFocusableRef.current) {
+            e.preventDefault();
+            firstFocusableRef.current?.focus();
+          }
+        }
+      }
+    };
+
+    mobileMenuRef.current.addEventListener('keydown', handleKeyDown);
+    // Focus first element
+    firstFocusableRef.current?.focus();
+
+    return () => {
+      mobileMenuRef.current?.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -109,9 +163,12 @@ export default function Navbar() {
             <path d="M12 1v1M12 21v1M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M1 12h2M21 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
           </svg>
         </button>
+        <a href="#contact" className={styles.ctaButton}>
+          Let's talk
+        </a>
       </div>
 
-      <div className={`${styles.mobileMenu} ${open ? styles.mobileMenuOpen : ''}`}>
+      <div ref={mobileMenuRef} className={`${styles.mobileMenu} ${open ? styles.mobileMenuOpen : ''}`} tabIndex={-1} aria-hidden={!open}>
         <div className={styles.mobileMenuContent}>
           <button
             className={styles.mobileMenuBtn}
