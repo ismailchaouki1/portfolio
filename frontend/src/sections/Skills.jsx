@@ -23,15 +23,12 @@ import {
   SiNetlify,
   SiXampp,
   SiApache,
-  SiDocker,
   SiFigma,
   SiMui,
   SiChakraui,
   SiGsap,
-  SiVite,
 } from 'react-icons/si';
-import { FaBug, FaLightbulb, FaCube, FaPuzzlePiece, FaImage, FaBox, FaDatabase } from 'react-icons/fa6';
-import { IoIosLink } from 'react-icons/io';
+import { FaCube, FaImage } from 'react-icons/fa6';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -59,8 +56,8 @@ const iconMap = {
   'Node.js': SiNodedotjs,
   'Express.js': SiExpress,
   Laravel: SiLaravel,
-  'REST APIs': FaBug,
-  'JWT Authentication': FaLightbulb,
+  'REST APIs': { type: 'badge', label: 'API' },
+  'JWT Authentication': { type: 'badge', label: 'JWT' },
 
   // Databases (medium card)
   MySQL: SiMysql,
@@ -76,22 +73,30 @@ const iconMap = {
   Netlify: SiNetlify,
   XAMPP: SiXampp,
   Apache: SiApache,
-  Laragon: SiDocker,
+  Laragon: { type: 'badge', label: 'La' },
 
   // Design (medium card)
   Figma: SiFigma,
-  'Adobe XD': SiFigma,
+  'Adobe XD': { type: 'badge', label: 'Xd' },
   Canva: FaImage,
 
   // Methodologies (wide strip - text badges)
-  Agile: 'badge',
-  Scrum: 'badge',
-  'Clean Code': FaLightbulb,
-  MVC: FaBug,
+  Agile: { type: 'badge', label: 'A' },
+  Scrum: { type: 'badge', label: 'S' },
+  'Clean Code': { type: 'badge', label: 'CC' },
+  MVC: { type: 'badge', label: 'MV' },
 };
 
 const SkillIcon = ({ name }) => {
   const Icon = iconMap[name];
+
+  if (Icon && typeof Icon === 'object' && Icon.type === 'badge') {
+    return (
+      <span className={styles.iconBadge}>
+        {Icon.label}
+      </span>
+    );
+  }
 
   if (Icon === 'badge') {
     const letters = name.split(' ').map(l => l[0]).join('');
@@ -185,7 +190,7 @@ export default function Skills() {
           }
 
           return (
-            <div key={skill.category} className={cardClass}>
+            <div key={skill.category} className={`${styles.skillCard} ${cardClass}`}>
               <h3 className={styles.skillCategory}>{skill.category}</h3>
               <div className={styles.skillChiplist}>
                 {skill.items.map((item, i) => (
