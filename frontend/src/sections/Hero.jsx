@@ -1,24 +1,14 @@
 import styles from './Hero.module.css';
-import { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import useMagnetic from '../hooks/useMagnetic';
-import React from 'react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
-const HeroScene = lazy(() => import('../components/hero/HeroScene'));
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const heroRef = useRef(null);
   const nameRef = useRef(null);
-
-  const {
-    ref: magneticRef,
-    pos: magneticPos,
-    isActive: _isMagneticActive,
-    handleMouseEnter: handleMouseEnterMag,
-    handleMouseLeave: handleMouseLeaveMag,
-    handleMouseMove: handleMouseMoveMag,
-    applyTransform: _applyMagneticTransform,
-  } = useMagnetic();
 
   useEffect(() => {
     if (!heroRef.current || typeof window === 'undefined') return;
@@ -46,64 +36,65 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className={styles.hero} ref={heroRef}>
-      <Suspense fallback={
-        <div className={styles.bgLayer} style={{ opacity: 1 }} />
-      }>
-        <HeroScene />
-      </Suspense>
+    <ErrorBoundary title="Hero Section Error">
+      <section className={styles.hero} ref={heroRef}>
+        <div className={styles.bgLayer} aria-hidden="true" />
+        <div className={styles.technicalGrid} aria-hidden="true" />
 
-      <div className={styles.technicalGrid} aria-hidden="true" />
+        <div className={styles.container}>
+          <div className={styles.text}>
+            <p className={styles.label}>Full Stack Web Developer</p>
 
-      <div className={styles.container}>
-        <div className={styles.text}>
-          <p className={styles.label}>Full Stack Web Developer</p>
-
-          <h1 className={styles.name} ref={nameRef}>
-            {('Ismail Chaouki').split(/\s+/).map((word, wi) => (
-              <React.Fragment key={wi}>
-                {wi > 0 && <span className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>&nbsp;</span>}
-                <span className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+            <h1 className={styles.name} ref={nameRef}>
+              {('Ismail Chaouki').split(/\s+/).map((word, wi) => (
+                <span key={wi} className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
                   {word.split('').map((char, i) => (
                     <span key={`${wi}-${i}`} className="char" style={{ display: 'inline-block' }}>
                       {char}
                     </span>
                   ))}
+                  {wi < 2 && <>&nbsp;</>}
                 </span>
-              </React.Fragment>
-            ))}
-          </h1>
+              ))}
+            </h1>
 
-          <p className={styles.pitch}>
-            Full-stack developer building fast, accessible web apps with React, Node/Express, Laravel and MySQL.
-          </p>
+            <p className={styles.pitch}>
+              Full-stack developer building fast, accessible web apps with React, Node/Express, Laravel and MySQL.
+              Currently interning at FlexBusiness on an audit-log microservice and at Codveda, where I shipped
+              7 projects end-to-end.
+            </p>
 
-          <div className={styles.actions}>
-            <a
-              href="#projects"
-              className={`${styles.btn} ${styles.btnPrimary}`}
-              ref={magneticRef}
-              onMouseEnter={handleMouseEnterMag}
-              onMouseLeave={handleMouseLeaveMag}
-              onMouseMove={handleMouseMoveMag}
-              style={{
-                transform: `translate3d(${magneticPos.x}px, ${magneticPos.y}px, 0)`,
-                transition: 'transform 0.15s ease-out',
-              }}
-            >
-              View projects
-            </a>
-            <a href="#contact" className={`${styles.btn} ${styles.btnGhost}`}>
-              Contact
-            </a>
-          </div>
+            <div className={styles.actions}>
+              <a
+                href="#projects"
+                className={`${styles.btn} ${styles.btnPrimary}`}
+              >
+                View projects
+              </a>
+              <a
+                href="/Ismail_Chaouki_Resume.pdf"
+                className={`${styles.btn} ${styles.btnGhost}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download CV
+              </a>
+            </div>
 
-          <div className={styles.scrollCue}>
-            <span className={styles.scrollText}>Scroll</span>
-            <div className={styles.scrollLine} />
+            <div className={styles.techStrip}>
+              <span className={styles.techItem}>React.js</span>
+              <span className={styles.techItem}>Node.js</span>
+              <span className={styles.techItem}>Express.js</span>
+              <span className={styles.techItem}>Laravel</span>
+              <span className={styles.techItem}>MySQL</span>
+              <span className={styles.techItem}>MongoDB</span>
+              <span className={styles.techItem}>Firebase</span>
+              <span className={styles.techItem}>JavaScript</span>
+              <span className={styles.techItem}>PHP</span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </ErrorBoundary>
   );
 }

@@ -8,14 +8,6 @@
   overflow: hidden;
 }
 
-/* JS failure fallback: visible by default, GSAP will hide then reveal in animation */
-@starting-style {
-  .skillCard {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 .container {
   position: relative;
   z-index: 2;
@@ -65,8 +57,6 @@
   padding: var(--space-6);
   transition: all var(--dur-fast) var(--ease-out);
   will-change: transform, opacity;
-  opacity: 0;
-  transform: translateY(30px);
 }
 
 .skillCardLarge {

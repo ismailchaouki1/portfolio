@@ -1,13 +1,5 @@
 /* Projects section — interactive grid with filter pills and smooth FLIP animations */
 
-/* JS failure fallback: visible by default, GSAP will hide then reveal in animation */
-@starting-style {
-  .projectCard {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 .section {
   position: relative;
   min-height: 100vh;
@@ -89,7 +81,7 @@
   border-radius: var(--radius-m);
   overflow: hidden;
   transform-style: preserve-3d;
-  opacity: 0;
+  opacity: 1;
   transition: opacity var(--dur-mid) var(--ease-out);
   will-change: transform, opacity;
 }
