@@ -23,3 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 package-lock.json
+
+# Personal files
+Ismail_Chaouki_Resume.pdf
+*.pdf
+frontend/public/*.pdf
+
+# AI/Generated files
+.claude/
+CLAUDE.md
+_reactbits-ref/

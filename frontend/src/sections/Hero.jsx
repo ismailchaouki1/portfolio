@@ -1,62 +1,77 @@
-import styles from './Hero.module.css';
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef, useState, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { useReveal } from '../hooks/useReveal';
 import { ErrorBoundary } from '../components/ErrorBoundary';
+import styles from './Hero.module.css';
 
-gsap.registerPlugin(ScrollTrigger);
+const roles = [
+  'Full Stack Web Developer',
+  'React & Node.js',
+  'Laravel & MySQL',
+  'REST APIs & JWT',
+];
 
 export default function Hero() {
   const heroRef = useRef(null);
   const nameRef = useRef(null);
+  const roleRef = useRef(null);
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useReveal(heroRef, { once: true });
 
   useEffect(() => {
-    if (!heroRef.current || typeof window === 'undefined') return;
+    const roleEl = roleRef.current;
+    if (!roleEl) return;
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const tl = gsap.timeline({
+      repeat: -1,
+      repeatDelay: 2,
+    });
 
-    const ctx = gsap.context(() => {
-      if (prefersReduced) {
-        gsap.set(nameRef.current, { opacity: 1, y: 0 });
-        return;
-      }
+    roles.forEach((_, i) => {
+      tl.to(roleEl, {
+        opacity: i === roleIndex ? 1 : 0,
+        y: i === roleIndex ? 0 : 20,
+        duration: 0.6,
+        ease: 'power2.out',
+      }, i * 0.8);
+    });
 
-      const nameChars = nameRef.current.querySelectorAll('.char');
-      const tl = gsap.timeline({ defaults: { duration: 0.8, ease: 'power3.out' } });
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 2000);
 
-      tl.from(nameChars, {
-        opacity: 0,
-        y: 30,
-        stagger: 0.05,
-        delay: 0.3,
-      });
-    }, heroRef);
+    return () => {
+      tl.kill();
+      clearInterval(interval);
+    };
+  }, [roleIndex]);
 
-    return () => ctx.revert();
-  }, []);
+  const cvUrl = import.meta.env.VITE_CV_URL || '';
 
   return (
     <ErrorBoundary title="Hero Section Error">
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.bgLayer} aria-hidden="true" />
-        <div className={styles.technicalGrid} aria-hidden="true" />
+        <div className={styles.bgOverlay} aria-hidden="true" />
 
         <div className={styles.container}>
           <div className={styles.text}>
             <p className={styles.label}>Full Stack Web Developer</p>
 
             <h1 className={styles.name} ref={nameRef}>
-              {('Ismail Chaouki').split(/\s+/).map((word, wi) => (
-                <span key={wi} className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
-                  {word.split('').map((char, i) => (
-                    <span key={`${wi}-${i}`} className="char" style={{ display: 'inline-block' }}>
-                      {char}
-                    </span>
-                  ))}
-                  {wi < 2 && <>&nbsp;</>}
-                </span>
-              ))}
+              <span className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+                Ismail
+              </span>
+              <span style={{ display: 'inline-block' }}>&nbsp;</span>
+              <span className="word" style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+                Chaouki
+              </span>
             </h1>
+
+            <div className={styles.roleContainer}>
+              <span className={styles.roleText} ref={roleRef}>{roles[roleIndex]}</span>
+            </div>
 
             <p className={styles.pitch}>
               Full-stack developer building fast, accessible web apps with React, Node/Express, Laravel and MySQL.
@@ -71,14 +86,16 @@ export default function Hero() {
               >
                 View projects
               </a>
-              <a
-                href="/Ismail_Chaouki_Resume.pdf"
-                className={`${styles.btn} ${styles.btnGhost}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Download CV
-              </a>
+              {cvUrl && (
+                <a
+                  href={cvUrl}
+                  className={`${styles.btn} ${styles.btnGhost}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Download CV
+                </a>
+              )}
             </div>
 
             <div className={styles.techStrip}>
