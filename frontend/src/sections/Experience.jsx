@@ -19,11 +19,11 @@ export default function Experience() {
         if (!card) return;
 
         // Hide by default for JS users
-        gsap.set(card, { opacity: 0, y: 30 });
+        gsap.set(card, { opacity: 0, y: 30, visibility: 'hidden' });
 
         if (prefersReduced) {
           // Visible immediately for users who prefer reduced motion
-          gsap.set(card, { opacity: 1, y: 0 });
+          gsap.set(card, { opacity: 1, y: 0, visibility: 'visible' });
           return;
         }
 
@@ -36,6 +36,7 @@ export default function Experience() {
             gsap.to(card, {
               opacity: 1,
               y: 0,
+              visibility: 'visible',
               duration: 0.6,
               ease: 'back.out(1.7)',
             });

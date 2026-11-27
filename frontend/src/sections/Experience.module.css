@@ -29,7 +29,7 @@
 }
 
 .sectionTitle {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: var(--font-weight-bold);
   font-size: clamp(2rem, 5vw, 2.5rem);
   line-height: 1.2;
@@ -103,6 +103,16 @@
   opacity: 0;
   transform: translateY(30px);
   will-change: transform, opacity;
+  visibility: hidden;
+}
+
+/* JS failure fallback: visible by default, GSAP will hide then reveal in animation */
+@starting-style {
+  .itemCard {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
 }
 
 .itemCard:hover {
