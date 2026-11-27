@@ -41,20 +41,11 @@
   align-items: center;
 }
 
-/* Portrait wrapper with clip-path reveal */
+/* Portrait wrapper */
 .portraitWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* Failure-safe visibility: visible when JS fails or before animation */
-@starting-style {
-  .portraitWrapper,
-  .contentWrapper {
-    opacity: 1;
-    clip-path: none;
-  }
 }
 
 .portrait {

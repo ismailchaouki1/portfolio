@@ -1,10 +1,10 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, MeshDistortMaterial, Environment, ContactShadows } from '@react-three/drei';
+import { ContactShadows } from '@react-three/drei';
 import { useRef, useEffect, useState, useMemo } from 'react';
 import * as THREE from 'three';
 
-const ACCENT = new THREE.Color('#e8892b');
-const ACCENT_HEX = '#e8892b';
+const ACCENT = new THREE.Color('#d98935');
+const ACCENT_HEX = '#d98935';
 
 function FloatingIcosahedron() {
   const ref = useRef();
@@ -114,17 +114,14 @@ function Lighting() {
   );
 }
 
-function Scene({ isVisible }) {
+function Scene() {
   const { gl } = useThree();
   const [dpr] = useState(Math.min(window.devicePixelRatio, 1.5));
 
   useEffect(() => {
     gl.setPixelRatio(dpr);
+    console.log('HeroScene mounted');
   }, [gl, dpr]);
-
-  if (!isVisible) {
-    return null;
-  }
 
   return (
     <group>
@@ -143,7 +140,6 @@ function Scene({ isVisible }) {
 }
 
 export default function HeroScene() {
-  const [isVisible, setIsVisible] = useState(false);
   const [inView, setInView] = useState(false);
   const containerRef = useRef();
 
@@ -151,7 +147,6 @@ export default function HeroScene() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          setIsVisible(entry.isIntersecting);
           setInView(entry.isIntersecting);
         });
       },
@@ -185,7 +180,7 @@ export default function HeroScene() {
         }}
       >
         <color attach="background" args={['#0a0f1a']} />
-        <Scene isVisible={inView} />
+        <Scene />
       </Canvas>
     </div>
   );

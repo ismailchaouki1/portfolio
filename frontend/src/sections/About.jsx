@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import { education } from '../data/content';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useReveal } from '../hooks/useReveal';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,9 +13,6 @@ export default function About() {
   const rightRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  useReveal(leftRef, { start: 'top 85%' });
-  useReveal(rightRef, { start: 'top 85%' });
-
   useEffect(() => {
     const ctx = gsap.context(() => {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -26,26 +22,32 @@ export default function About() {
         return;
       }
 
-      // Stat counters with number animation
-      if (rightRef.current) {
-        const counterElements = rightRef.current.querySelectorAll('.stat-value');
-        counterElements.forEach((el, idx) => {
-          const endValue = parseInt(el.textContent);
-          gsap.fromTo(
-            el,
-            { textContent: 0 },
-            {
-              textContent: endValue,
-              duration: 0.8,
-              ease: 'power2.out',
-              onUpdate: function() {
-                this.targets()[0].textContent = Math.floor(this.targets()[0].textContent);
-              },
-              delay: idx * 0.1,
-            }
+      // Left column (portrait) reveal - visible by default, animates on scroll
+      ScrollTrigger.create({
+        trigger: leftRef.current,
+        start: 'top 85%',
+        onEnter: () => {
+          gsap.fromTo(leftRef.current,
+            { opacity: 0.7, y: 20 },
+            { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
           );
-        });
-      }
+        },
+        once: true,
+      });
+
+      // Right column (text) reveal - visible by default, animates on scroll
+      ScrollTrigger.create({
+        trigger: rightRef.current,
+        start: 'top 85%',
+        onEnter: () => {
+          const elements = rightRef.current.querySelectorAll('h2, p, .stats, .timeline');
+          gsap.fromTo(elements,
+            { opacity: 0.7, y: 10 },
+            { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.05 }
+          );
+        },
+        once: true,
+      });
     }, sectionRef);
 
     return () => ctx.revert();
