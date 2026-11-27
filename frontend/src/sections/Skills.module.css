@@ -8,6 +8,14 @@
   overflow: hidden;
 }
 
+/* JS failure fallback: visible by default, GSAP will hide then reveal in animation */
+@starting-style {
+  .skillCard {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .container {
   position: relative;
   z-index: 2;
