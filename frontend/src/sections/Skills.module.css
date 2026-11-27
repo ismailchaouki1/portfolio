@@ -2,10 +2,26 @@
 
 .section {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: var(--space-3xl) var(--space-4);
   background: var(--color-bg);
   overflow: hidden;
+}
+
+.bgLayer {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg);
+  z-index: 1;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(217, 133, 53, 0.08) 0%, transparent 40%);
+  opacity: 0.3;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .container {
@@ -15,11 +31,6 @@
   margin: 0 auto;
 }
 
-.sectionHead {
-  text-align: center;
-  margin-bottom: var(--space-xl);
-}
-
 .sectionTitle {
   font-family: var(--font-display);
   font-weight: var(--font-weight-bold);
@@ -27,16 +38,8 @@
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--color-text);
-  margin-bottom: var(--space-3);
+  margin: 0 0 var(--space-4);
   text-wrap: balance;
-}
-
-.sectionDesc {
-  font-family: var(--font-sans);
-  font-size: var(--text-lg);
-  color: var(--color-text-dim);
-  line-height: 1.6;
-  text-align: center;
 }
 
 .skillCategory {
@@ -51,7 +54,7 @@
 }
 
 .skillCard {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-m);
   padding: var(--space-6);
@@ -75,6 +78,9 @@
   transform: translateY(-4px);
   box-shadow: 0 0 0 1px var(--color-accent-glow), var(--shadow-md);
   border-color: var(--color-accent);
+  .skillIcon {
+    color: var(--color-accent);
+  }
 }
 
 .skillChiplist {
@@ -109,8 +115,9 @@
   flex-shrink: 0;
   width: var(--space-6);
   height: var(--space-6);
-  color: var(--color-accent);
+  color: var(--color-text-dim);
   fill: currentColor;
+  transition: color var(--dur-fast) var(--ease-out);
 }
 
 .skillChip {
@@ -185,10 +192,6 @@
     gap: var(--space-4);
     padding: 0;
   }
-
-  .marqueeContainer {
-    display: none;
-  }
 }
 
 @media (max-width: 390px) {
@@ -203,39 +206,7 @@
   }
 }
 
-/* Tech marquee */
-.marqueeContainer {
-  position: absolute;
-  inset: 0;
-  bottom: 0;
-  padding: var(--space-4);
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.marquee {
-  display: flex;
-  gap: var(--space-xl);
-  animation: marqueeScroll 20s linear infinite;
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--color-text-dim);
-}
-
-.marquee span {
-  white-space: nowrap;
-}
-
-@keyframes marqueeScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .marquee {
-    animation: none;
-  }
   .skillCard {
     opacity: 1;
     transform: none;
