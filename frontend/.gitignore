@@ -32,4 +32,7 @@ frontend/public/*.pdf
 # AI/Generated files
 .claude/
 CLAUDE.md
-_reactbits-ref/
+_reactbits-ref/scripts/
+dist/
+docs/
+scripts/
