@@ -10,7 +10,7 @@ export default function Navbar() {
     } catch {
       /* ignore */
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'dark';
   });
   const mobileMenuRef = useRef(null);
   const firstFocusableRef = useRef(null);
