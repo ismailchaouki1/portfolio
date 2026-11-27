@@ -59,52 +59,53 @@ export default function Contact() {
   }, [status.state]);
 
   return (
-    <section id="contact" className={`section container ${styles.contact}`}>
-      <div className="section-head">
-        <h2 className={styles.sectionTitle}>Contact</h2>
-      </div>
-      <div className={styles.contactGrid}>
-        <div className={styles.contactCard}>
-          <form className={styles.contactForm} onSubmit={handleSubmit} autoComplete="off">
-            <input type="hidden" name="honeypot" className={styles.honeypot} />
-            <label htmlFor="name" className={styles.contactLabel}>
-              Name
-              <input id="name" type="text" name="name" className={styles.contactInput} required minLength={2} />
-            </label>
-            <label htmlFor="email" className={styles.contactLabel}>
-              Email
-              <input id="email" type="email" name="email" className={styles.contactInput} required />
-            </label>
-            <label htmlFor="message" className={styles.contactLabel}>
-              Message
-              <textarea id="message" name="message" className={styles.contactTextarea} required minLength={10}>
-              </textarea>
-            </label>
-            <button type="submit" className={styles.contactSubmit} disabled={status.state === 'loading'}>
-              {status.state === 'loading' ? 'Sending...' : 'Send'}
-            </button>
-            {status.state !== 'idle' && (
-              <p className={status.state === 'success' ? styles.statusSuccess : styles.statusError}>{status.message}</p>
-            )}
-          </form>
+    <section id="contact" className={styles.section}>
+      <div className={styles.container}>
+        <div className={styles.sectionHead}>
+          <h2 className={styles.sectionTitle}>Let's build something together</h2>
         </div>
-        <div className={styles.contactCard}>
-          <h3>Get in Touch</h3>
-          <div className={styles.contactAddress}>
-            <p className={styles.contactLocation}>{personal.location}</p>
-            <a href={`mailto:${personal.email}`} className={styles.contactLink}>
-              <IoIosMail className={styles.socialIcon} />
-              <span>{personal.email}</span>
-            </a>
-            <div className={styles.socialLinks}>
-              <a href={personal.github} target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
-                <SiGithub className={styles.socialIcon} />
-                <span>GitHub</span>
+        <div className={styles.contactGrid}>
+          <div className={styles.contactCard}>
+            <form className={styles.contactForm} onSubmit={handleSubmit} autoComplete="off">
+              <input type="hidden" name="honeypot" className={styles.honeypot} />
+              <label htmlFor="name" className={styles.contactLabel}>
+                Name
+                <input id="name" type="text" name="name" className={styles.contactInput} required minLength={2} />
+              </label>
+              <label htmlFor="email" className={styles.contactLabel}>
+                Email
+                <input id="email" type="email" name="email" className={styles.contactInput} required />
+              </label>
+              <label htmlFor="message" className={styles.contactLabel}>
+                Message
+                <textarea id="message" name="message" className={styles.contactTextarea} required minLength={10} />
+              </label>
+              <button type="submit" className={styles.contactSubmit} disabled={status.state === 'loading'}>
+                {status.state === 'loading' ? 'Sending...' : 'Send'}
+              </button>
+              {status.state !== 'idle' && (
+                <p className={status.state === 'success' ? styles.statusSuccess : styles.statusError}>{status.message}</p>
+              )}
+            </form>
+          </div>
+          <div className={styles.contactCard}>
+            <h3>Get in Touch</h3>
+            <div className={styles.contactAddress}>
+              <p className={styles.contactLocation}>{personal.location}</p>
+              <a href={`mailto:${personal.email}`} className={styles.contactLink}>
+                <IoIosMail className={styles.socialIcon} />
+                <span>{personal.email}</span>
               </a>
-              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
-                <FaLinkedinIn className={styles.socialIcon} />
-                <span>LinkedIn</span>
-              </a>
+              <div className={styles.socialLinks}>
+                <a href={personal.github} target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+                  <SiGithub className={styles.socialIcon} />
+                  <span>GitHub</span>
+                </a>
+                <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+                  <FaLinkedinIn className={styles.socialIcon} />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

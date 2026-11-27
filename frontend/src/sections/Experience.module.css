@@ -92,6 +92,8 @@
               border-color var(--dur-fast) var(--ease-out);
   max-width: 450px;
   min-width: 280px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .itemCard:hover {

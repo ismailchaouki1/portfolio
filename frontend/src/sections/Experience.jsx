@@ -9,21 +9,18 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Experience() {
   const sectionRef = useRef(null);
   const lineRef = useRef(null);
-  const cardsRef = useRef([]);
+  const cardsRef = [];
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const ctx = gsap.context(() => {
-      cardsRef.current.forEach((card) => {
+      cardsRef.current.forEach((card, idx) => {
         if (!card) return;
 
-        // Hide by default for JS users
-        gsap.set(card, { opacity: 0, y: 30, visibility: 'hidden' });
-
+        // Cards are visible by default in CSS
+        // Animation enhances the reveal on scroll
         if (prefersReduced) {
-          // Visible immediately for users who prefer reduced motion
-          gsap.set(card, { opacity: 1, y: 0, visibility: 'visible' });
           return;
         }
 
@@ -33,18 +30,19 @@ export default function Experience() {
           end: 'top 70%',
           toggleAction: 'play',
           onEnter: () => {
-            gsap.to(card, {
+            gsap.from(card, {
               opacity: 1,
               y: 0,
-              visibility: 'visible',
               duration: 0.6,
               ease: 'back.out(1.7)',
+              delay: idx * 0.1,
             });
           },
         });
       });
 
       if (lineRef.current) {
+        // Line starts hidden and draws on scroll
         gsap.set(lineRef.current, { scaleX: 0, transformOrigin: 'left' });
         ScrollTrigger.create({
           trigger: sectionRef.current,
@@ -86,30 +84,34 @@ export default function Experience() {
         </svg>
 
         <div className={styles.timelineItems}>
-          {experience.map((exp, itemIdx) => (
-            <div
-              key={exp.id}
-              className={styles.timelineItem}
-              ref={(el) => {
-                cardsRef.current[itemIdx] = el;
-              }}
-            >
-              <div className={styles.itemMarker} aria-hidden="true" />
-              <div className={styles.itemCard}>
-                <h3 className={styles.itemRole}>
-                  {exp.role} @ {exp.company}
-                </h3>
-                <p className={styles.itemDate}>
-                  {exp.start} – {exp.end}
-                </p>
-                <ul className={styles.itemList}>
-                  {exp.bullets.map((bullet, bulletIdx) => (
-                    <li key={bulletIdx}>{bullet}</li>
-                  ))}
-                </ul>
+          {experience.map((exp, itemIdx) => {
+            const date = new Date(exp.start);
+            const monthYear = date.toLocaleDateString('en-US', { month: 'short', year: 'short' });
+            const endYear = exp.end ? new Date(exp.end).toLocaleDateString('en-US', { month: 'short', year: 'short' }) : 'Present';
+
+            return (
+              <div
+                key={exp.id}
+                className={styles.timelineItem}
+                ref={(el) => { if (el) cardsRef.current[itemIdx] = el; }}
+              >
+                <div className={styles.itemMarker} aria-hidden="true" />
+                <div className={styles.itemCard}>
+                  <h3 className={styles.itemRole}>
+                    {exp.role} @ {exp.company}
+                  </h3>
+                  <p className={styles.itemDate}>
+                    {monthYear} – {endYear}
+                  </p>
+                  <ul className={styles.itemList}>
+                    {exp.bullets.map((bullet, bulletIdx) => (
+                      <li key={bulletIdx}>{bullet}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -174,13 +174,13 @@
 }
 
 .statusSuccess {
-  color: var(--color-text);
+  color: var(--color-accent);
   font-size: var(--text-sm);
   margin-top: var(--space-2);
 }
 
 .statusError {
-  color: var(--color-text-dim);
+  color: var(--color-accent-2);
   font-size: var(--text-sm);
   margin-top: var(--space-2);
 }

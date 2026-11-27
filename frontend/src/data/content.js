@@ -8,7 +8,7 @@ export const personal = {
   email: 'ismailchaouki111@gmail.com',
   phone: null,
   github: 'https://github.com/ismailchaouki1',
-  linkedin: 'https://linkedin.com/in/ismail-chaouki',
+  linkedin: 'https://www.linkedin.com/in/ismail-chaouki',
   summary:
     'Full-stack developer building fast, accessible web apps with React, Node/Express, Laravel and MySQL. Currently interning at FlexBusiness on an audit-log microservice and at Codveda, where I shipped 7 projects end-to-end. I care about clean data models, small bundles and interfaces that actually get used.',
 };
