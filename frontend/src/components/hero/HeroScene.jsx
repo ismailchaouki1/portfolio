@@ -1,9 +1,10 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, MeshDistortMaterial } from '@react-three/drei';
+import { OrbitControls, MeshDistortMaterial, Environment, ContactShadows } from '@react-three/drei';
 import { useRef, useEffect, useState, useMemo } from 'react';
 import * as THREE from 'three';
 
 const ACCENT = new THREE.Color('#e8892b');
+const ACCENT_HEX = '#e8892b';
 
 function FloatingIcosahedron() {
   const ref = useRef();
@@ -103,6 +104,16 @@ function Ring() {
   );
 }
 
+function Lighting() {
+  return (
+    <>
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[5, 5, 5]} intensity={0.6} />
+      <pointLight position={[-5, -5, -5]} intensity={0.4} color={ACCENT_HEX} />
+    </>
+  );
+}
+
 function Scene({ isVisible }) {
   const { gl } = useThree();
   const [dpr] = useState(Math.min(window.devicePixelRatio, 1.5));
@@ -117,9 +128,16 @@ function Scene({ isVisible }) {
 
   return (
     <group>
+      <Lighting />
       <FloatingIcosahedron />
       <OrbitingCubes count={12} />
       <Ring />
+      <ContactShadows
+        position={[0, -1.5, 0]}
+        opacity={0.2}
+        scale={6}
+        blur={2}
+      />
     </group>
   );
 }

@@ -60,14 +60,14 @@ export default function Hero() {
           <p className={styles.label}>Full Stack Web Developer</p>
 
           <h1 className={styles.name} ref={nameRef}>
-            {('Ismail Chaouki').split(/\s+/).map((word, wi) => (
+            {('Ismail Chaouki').split(/\s+/).map((word, wi, words) => (
               <React.Fragment key={wi}>
                 {word.split('').map((char, i) => (
                   <span key={`${wi}-${i}`} className="char" style={{ display: 'inline-block' }}>
                     {char}
                   </span>
                 ))}
-                {wi < 1 && ' '}
+                {wi < words.length - 1 && <>&nbsp;</>}
               </React.Fragment>
             ))}
           </h1>
