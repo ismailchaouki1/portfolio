@@ -47,7 +47,7 @@ export default function Hero() {
     };
   }, [roleIndex]);
 
-  const cvUrl = import.meta.env.VITE_CV_URL || '/Ismail_Chaouki_Resume.pdf';
+  const cvUrl = import.meta.env.VITE_CV_URL;
 
   return (
     <ErrorBoundary title="Hero Section Error">
