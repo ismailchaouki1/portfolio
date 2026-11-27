@@ -91,7 +91,7 @@ export default function About() {
           {/* Left column: Portrait */}
           <div className={styles.portraitWrapper} ref={leftRef}>
             <img
-              src="/assets/ISMAIL_CHAOUKI.webp"
+              src="/assets/ISMAIL_CHAOUKI.jpg"
               alt="Ismail Chaouki - Full Stack Web Developer"
               className={styles.portrait}
               onLoad={() => setImageLoaded(true)}
